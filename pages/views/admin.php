@@ -47,52 +47,44 @@ class AdminView extends AbstractView {
 		}
 	}
 	
-	public function SignUpView($data, $user)
+	public function LogoutView($user)
 	{
-		include_once(PATH_CORE_CLASS."impeesaForm.class.php");
-		$form		= new impeesaForm();
-		
-		$username		= (isset($data['username'])) ? $data['username'] : "";
-		$email			= (isset($data['email'])) ? $data['email'] : "";
-		$form_fields	= array(
-								array("fieldset", "", array(
-									array("text", "Username", "username", $username, True),
-									array("password", "Passwort", "pass", "", True),
-									array("email", "Email", "email", $email, True),
-									),
-								),
-								array("fieldset", "", array(
-									array("submit", "Registrieren", "submit"),
-									),
-								),
-							);
-		if(!isset($data['submit']) || $form->Validation($form_fields, $data) == false)
+		if($user->SetLogout())
 		{
-			$content	= $form->GetForm($form_fields, CURRENT_PAGE);
-		}
-		else
-		{
-			if($user->ExistsUsername($data['username']) === true)
-			{
-				$form->SetErrorMsg("Benutzername ist schon vergeben!");
-				$content	= $form->GetForm($form_fields, CURRENT_PAGE);
-			}
-			else
-			{
-				$user->CreateUser($data['username'], $data['pass'], $data['email']);
-				
-				$this->tpl->vars("message",		"Registierung war erfolgreich!");
-				$content	= $this->tpl->load("_message_success");
-			}
+			$this->tpl->vars("message",		"Erfolgreich ausgeloggt!");
+			return $this->tpl->load("_message_success");
 		}
 		
-		$this->tpl->vars("headline",	"Registieren");
-		$this->tpl->vars("content",		$content);
-		return $this->tpl->load("content");
+		$this->tpl->vars("message",		"Logout fehlgeschlagen!");
+		return $this->tpl->load("_message_error");
 	}
 	
 	public function SidebarView()
 	{
-		return "<h5>Intern</h5>";
+		$menu_array	= array(
+				array(
+						"page_url"		=> LINK_MAIN."admin/userManagement/signup",
+						"page_title"	=> "User hinzufügen",
+				),
+		);
+		
+		$menu_items	= "";
+		foreach($menu_array	as $menu_item)
+		{
+			$this->tpl->vars("page_url",		$menu_item['page_url']);
+			$this->tpl->vars("page_title",		$menu_item['page_title']);
+			$menu_items		.= $this->tpl->load("_nav_li");
+		}
+		
+		$this->tpl->vars("submenu_items",		$menu_items);
+		return $this->tpl->load("submenu", PATH_PAGES_TPL."sidebar/");
+	}
+	
+	public function InfobarView()
+	{
+		/**
+		 * @TODO: Add nice actions
+		 */
+		return "";
 	}
 }

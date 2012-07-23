@@ -118,16 +118,18 @@ class impeesaUser {
 	public function CreateUser($username, $password, $email)
 	{
 		$sth	= $this->db->prepare("INSERT INTO ".MYSQL_PREFIX."users
-									(username, password, salt, email)
+									(username, password, salt, email, session_key)
 									VALUES
-									(:username, :password, :salt, :email)");
+									(:username, :password, :salt, :email, :session_key)");
 		
 		$created_password	= $this->CreatePasswordHash($password);
+		$session_key		= substr(md5(time()), 0,6);
 		
 		$sth->bindParam(":username",		$username);
 		$sth->bindParam(":password",		$created_password[0]);
 		$sth->bindParam(":salt",			$created_password[1]);
 		$sth->bindParam(":email",			$email);
+		$sth->bindParam(":session_key",		$session_key);
 		
 		if($sth->execute())
 		{
@@ -200,6 +202,23 @@ class impeesaUser {
 		$_SESSION['user_id'] = $this->user_id;
 		$this->SetSessionFingerprint($this->user_id);
 		return true;
+	}
+	
+	public function SetLogout()
+	{
+		$sth	= $this->db->prepare("UPDATE ".MYSQL_PREFIX."users SET
+									session_fingerprint	= '',
+									session_key			= :session_key
+									WHERE id			= :user_id");
+		$sth->bindParam(":session_key",			$session_key);
+		$sth->bindParam(":user_id",				$this->session['user_id']);
+		
+		if($sth->execute())
+		{
+			unset($_SESSION['user_id']);
+			return true;
+		}
+		return false;
 	}
 	
 	public function GetUserId()

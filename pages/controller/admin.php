@@ -15,7 +15,7 @@ class AdminController extends AbstractController {
 		/**
 		 * User isn't login now
 		 */
-		if($user->isLogin() === false)
+		if($user->isLogin() === false || !isset($this->param[1]))
 		{
 			return $this->view->LoginView($_POST, $user);
 		}		
@@ -26,6 +26,12 @@ class AdminController extends AbstractController {
 		
 		switch($this->param[1])
 		{
+			case 'logout':
+				return $this->view->LogoutView($user);
+				break;
+			case 'userManagement':
+				$site	= "userManagement";
+				break;
 			default:
 				return $this->view->MainView();
 				break;
@@ -42,7 +48,8 @@ class AdminController extends AbstractController {
 				throw new impeesaException("Unknown site. File not found!");
 			}
 				
-			$page_class	= new PictureController($this->param);
+			$page_class	= ucfirst($site)."Controller";
+			$page_class	= new $page_class($this->param);
 				
 			if(method_exists($page_class, "AdminController"))
 			{
