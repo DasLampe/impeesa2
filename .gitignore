@@ -1,0 +1,6 @@
+tmp/*
+uploads/*/
+!README
+
+*.conf.php
+!path.conf.php
