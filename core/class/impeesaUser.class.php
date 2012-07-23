@@ -20,7 +20,7 @@ class impeesaUser {
 	
 	public function IsLogin()
 	{
-		if(isset($this->session['user_id']))
+		if(isset($this->session['user_id']) && md5($_SERVER['HTTP_USER_AGENT'].$this->GetUserSessionKey($this->session['user_id'])) == $this->GetUserSessionFingerprint($this->session['user_id']))
 		{
 			return true;
 		}
@@ -28,6 +28,38 @@ class impeesaUser {
 		{
 			return false;
 		}
+	}
+	
+	private function GetUserSessionKey($user_id)
+	{
+		$sth	= $this->db->prepare("SELECT session_key
+									FROM ".MYSQL_PREFIX."users
+									WHERE id = ?");
+		$sth->execute(array($user_id));
+		$row	= $sth->fetch();
+		return $row['session_key'];
+	}
+	
+	private function GetUserSessionFingerprint($user_id)
+	{
+		$sth	= $this->db->prepare("SELECT session_fingerprint
+				FROM ".MYSQL_PREFIX."users
+				WHERE id = ?");
+		$sth->execute(array($user_id));
+		$row	= $sth->fetch();
+		return $row['session_fingerprint'];
+	}
+	
+	private function SetSessionFingerprint($user_id)
+	{
+		$fingerprint = md5($_SERVER['HTTP_USER_AGENT'].$this->GetUserSessionKey($user_id));
+		$sth	= $this->db->prepare("UPDATE ".MYSQL_PREFIX."users SET
+									session_fingerprint = :fingerprint
+									WHERE id = :user_id");
+		$sth->bindParam(":fingerprint",	$fingerprint);
+		$sth->bindParam(":user_id",		$user_id);
+		$sth->execute();
+		return true;
 	}
 	
 	function SetUserId($userinfo)
@@ -166,6 +198,7 @@ class impeesaUser {
 	public function SetLogin()
 	{
 		$_SESSION['user_id'] = $this->user_id;
+		$this->SetSessionFingerprint($this->user_id);
 		return true;
 	}
 	
