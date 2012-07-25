@@ -7,9 +7,9 @@ class impeesaUser {
 	private $session;
 	private $user_id;
 	
-	public function __construct($session)
+	public function __construct(&$session)
 	{
-		$this->session	= $session;
+		$this->session	=& $session;
 		if(isset($this->session['user_id']))
 		{
 			$this->user_id	= $this->session['user_id'];
@@ -199,7 +199,7 @@ class impeesaUser {
 	
 	public function SetLogin()
 	{
-		$_SESSION['user_id'] = $this->user_id;
+		$this->session['user_id'] = $this->user_id;
 		$this->SetSessionFingerprint($this->user_id);
 		return true;
 	}
@@ -215,7 +215,7 @@ class impeesaUser {
 		
 		if($sth->execute())
 		{
-			unset($_SESSION['user_id']);
+			unset($this->session['user_id']);
 			return true;
 		}
 		return false;
