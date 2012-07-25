@@ -25,10 +25,12 @@
 	<a class="skip" title="ym-skip" href="#content">Skip to the content</a><span class="hideme">.</span>
 </ul>
 
-{if} {infobar} != ""{/if}
+{if} {infobar} != "" {/if}
 <div id="infobar">
 	<div class="ym-wrapper">
-		{infobar}
+		<div class="ym-grid">
+			{infobar}
+		</div>
 	</div>
 </div>
 {/endif}

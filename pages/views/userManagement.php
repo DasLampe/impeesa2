@@ -44,8 +44,7 @@ class userManagementView extends AbstractView
 			{
 				$user->CreateUser($data['username'], $data['pass'], $data['email']);
 		
-				$this->tpl->vars("message",		"Registierung war erfolgreich!");
-				$content	= $this->tpl->load("_message_success");
+				return impeesaLayer::SetInfoMsg($_SESSION, "Registierung erfolgreich", LINK_MAIN);
 			}
 		}
 		

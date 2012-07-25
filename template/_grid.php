@@ -4,4 +4,6 @@
 // | Encoding:  UTF-8 |
 // +----------------------------------------------------------------------+
 ?>
-<a href="{LINK_ACP}logout">Als {username} abmelden</a>
+<div class="ym-g{grid_width} ym-g{grid_align}">
+	{content}
+</div>

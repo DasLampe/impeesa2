@@ -4,4 +4,4 @@
 // | Encoding:  UTF-8 |
 // +----------------------------------------------------------------------+
 ?>
-<a href="{LINK_ACP}logout">Als {username} abmelden</a>
+<div class="{info_status} info-msg" align="center">{info_msg}</div>

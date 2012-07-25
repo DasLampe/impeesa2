@@ -36,8 +36,7 @@ class AdminView extends AbstractView {
 			if($user->SetUserIdByUsername($data['username']) === true && $user->GetPassword() == $user->GetNewPasswordHash($data['pass'], $data['username']))
 			{
 				$user->SetLogin();
-				$this->tpl->vars("message",		"Erfolgreich eingeloggt");
-				return $this->tpl->load("_message_success");
+				return impeesaLayer::SetInfoMsg($_SESSION, "Erfolgreich eingeloggt", LINK_MAIN."admin/home/");
 			}
 			else
 			{
@@ -51,12 +50,10 @@ class AdminView extends AbstractView {
 	{
 		if($user->SetLogout())
 		{
-			$this->tpl->vars("message",		"Erfolgreich ausgeloggt!");
-			return $this->tpl->load("_message_success");
+			return impeesaLayer::SetinfoMsg($_SESSION, "Erfolgreich ausgeloggt", LINK_MAIN);
 		}
 		
-		$this->tpl->vars("message",		"Logout fehlgeschlagen!");
-		return $this->tpl->load("_message_error");
+		return impeesaLayer::SetInfoMsg($_SESSION, "Logout fehlgeschlagen!", LINK_MAIN."admin/home/", "error");
 	}
 	
 	public function SidebarView()
