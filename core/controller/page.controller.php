@@ -58,7 +58,7 @@ class pageController
 		/**
 		 * Handle JSON
 		 */
-		if(preg_match('/^\{".*".?:.?".*"\}$/', $page_content))
+		if(preg_match('/^\{".*".?:/', $page_content))
 		{
 			header('Content-type: text/json');
 			echo $page_content;

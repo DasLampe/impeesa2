@@ -32,6 +32,9 @@ class AdminController extends AbstractController {
 			case 'userManagement':
 				$site	= "userManagement";
 				break;
+			case 'blog':
+				$site	= "blog";
+				break;
 			default:
 				return $this->view->MainView();
 				break;

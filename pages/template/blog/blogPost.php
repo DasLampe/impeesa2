@@ -4,8 +4,8 @@
 // | Encoding:  UTF-8 |
 // +----------------------------------------------------------------------+
 ?>
-<ul>
-	<li><a href="<?= LINK_MAIN; ?>home">Startseite</a></li>
-	<li><a href="<?= LINK_MAIN; ?>blog">SoLa Blog</a>
-	<li><a href="<?= LINK_MAIN; ?>admin/login">Intern</a></li>
-</ul>
+<h2>Tag {day} - {headline}</h2>
+<div>
+{content}
+</div>
+<div class="info" align="right">{publish}</div>

@@ -4,8 +4,7 @@
 // | Encoding:  UTF-8 |
 // +----------------------------------------------------------------------+
 ?>
-<ul>
-	<li><a href="<?= LINK_MAIN; ?>home">Startseite</a></li>
-	<li><a href="<?= LINK_MAIN; ?>blog">SoLa Blog</a>
-	<li><a href="<?= LINK_MAIN; ?>admin/login">Intern</a></li>
-</ul>
+<li id="add-file" class="ym-add">
+	<label for="file[]">{label}</label>
+</li>
+<input type="file" id="file2upload" name="file[]" multiple style="display: none;">

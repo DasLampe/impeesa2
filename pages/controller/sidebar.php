@@ -21,6 +21,12 @@ class SidebarController extends AbstractController {
 			$view		= new AdminView();
 			$return_content .= $view->SidebarView();
 		}
+		if(isset($this->param[1]) && $this->param[1] == "blog")
+		{
+			include_once(PATH_VIEW."blog.php");
+			$view		= new BlogView();
+			$return_content .= $view->SidebarView();
+		}
 		
 		return $return_content;
 	}

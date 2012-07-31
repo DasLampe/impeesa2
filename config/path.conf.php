@@ -27,6 +27,7 @@ define("PATH_UPLOAD",			PATH_MAIN."uploads/");
 define("LINK_MAIN",				"http://localhost/impeesa2/");
 define("LINK_TPL",				LINK_MAIN."template/");
 define("LINK_LIB",				LINK_MAIN."lib/");
+define("LINK_CORE_LIB",			LINK_MAIN."core/lib/");
 define("LINK_UPLOAD",			LINK_MAIN."uploads/");
 define("LINK_ACP",				LINK_MAIN."admin/");
 
