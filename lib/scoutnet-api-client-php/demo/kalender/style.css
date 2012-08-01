@@ -1,0 +1,104 @@
+body{
+	margin:0;
+	padding:0;
+	color: #333;
+}
+.snk{
+	background: url(http://kalender.scoutnet.de/2.0/templates/scoutnet/background.gif) 0 -85px repeat-x;
+	font-family: 'Trebuchet MS', Arial, Sans-Serif;
+}
+.snk-body{
+	padding:2px 15px;
+}
+.snk-datum, .snk-uhrzeit{
+	color: white;
+	display: inline;
+}
+.snk-uhrzeit{
+	color: white;
+	display: inline;
+}
+.snk-ebenene-menu{
+	float: right;
+	color: white;
+	position: relative;
+	top: -1.4em;
+	width:100%;
+	text-align:right;
+}
+.snk-termine{
+	clear:both;
+	width: 100%;
+}
+.snk-termine table{
+	width:100%;
+}
+
+.snk-termine caption{
+	padding-top: 0px;
+	padding-bottom: 10px;
+	font-size: 1.4em;
+	color: white;
+	font-weight: bold;
+	background: url(http://kalender.scoutnet.de/2.0/templates/scoutnet/icon.gif) no-repeat 10px 2px;
+	color: #F09404;
+	padding-left: 95px;
+}
+tr.snk-headings-row th{
+	background-color: transparent;
+	line-height: 120%;
+	padding: 0px;
+	color: #333;
+}
+.snk-termine th{
+	color: #222;
+	text-align: left;
+	background-color: #F59705;
+	line-height: 90%;
+	padding: 5px;
+}
+.snk-termine td{
+	padding-right: 5px;
+	vertical-align: top;
+}
+
+.snk a:link, .snk a:visited {
+	color:#3333FF;
+	text-decoration:underline;
+}
+.snk a:focus, .snk a:hover {
+	color:#000;
+	text-decoration:underline;
+}
+.snk a.snk-termin-link-opened, .snk a:active{
+	 color: #FF3300;
+	 text-decoration:underline;
+}
+
+.snk-footer{
+	border-top: 1px dashed #CCCCCC; 
+	margin: 2px 18px;
+	color: #555;
+}
+.snk-powered-by{
+	text-align: right;
+	float: right;
+}
+.snk-hinzufuegen{
+	float: left;
+	font-weight: bold;
+}
+.snk-termin-infos dl{
+	border: 1px solid black;
+	border-top:0;
+	border-right:0;
+	margin: 0px 0px 5px 10px;
+	padding: 10px 20px 20px 20px;
+}
+.snk-termin-infos dt{
+	font-weight: bold;
+}
+.snk-eintrag-ebene, table tr th.snk-eintrag-ebene-ueberschrift{
+	text-align:left;
+}
+

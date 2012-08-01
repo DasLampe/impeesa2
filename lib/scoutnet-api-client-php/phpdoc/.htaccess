@@ -1,0 +1,2 @@
+AddHandler text/html .html
+AddHandler text/html .htm
