@@ -1,11 +1,13 @@
 $(document).ready(function() {
-	$('#content[contenteditable="true"]').focusin(function() {
+	/*@FIXME: Not display when empty. -.-
+	 * 
+	 * $('#content[contenteditable="true"]').focusin(function() {
 		var placeholder="Hier Text eingeben";
 		if($(this).text().trim().toLowerCase() == placeholder.trim().toLowerCase())
 		{
 			$(this).empty();
 		}
-	});
+	})*/;
 	
 	$('#content[contenteditable="true"]').focusout(function() {
 		if(!$(this).text().length)
