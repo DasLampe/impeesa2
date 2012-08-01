@@ -80,13 +80,23 @@ nav, .ym-hlist
 }
 
 /*****************************+++Content****************************/
-.content h1:before {
+.content h1:before, .content h2:before {
 	content: "»‹ ";
 	color: #bc595e;
 }
 
+.content h3:before {
+	content: "»‹ ";
+	color: #19467f;
+}
+
+
 .content h1 {
 	font-family: 'Trebuchet MS', Verdana, Helvetica, Arial, sans-serif;
+}
+
+.content h2 {
+	border-bottom: 1px solid #781420;
 }
 
 .content p {
