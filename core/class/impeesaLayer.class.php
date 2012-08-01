@@ -5,6 +5,37 @@
 // +----------------------------------------------------------------------+
 class impeesaLayer
 {
+	private static $instance = NULL;
+	private $buttons = array();
+	
+	public static function getInstance()
+	{
+		if(null === self::$instance)
+		{
+			self::$instance = new self();
+		}
+		return self::$instance;
+	}
+	
+	public function AddButton($button_content, $align="left")
+	{
+		if(!empty($button_content))
+		{
+			$this->buttons[]	= array($button_content, $align);
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Returns an empty arrary or an array, which contains all added buttons ..
+	 * @return array
+	 */
+	public function GetButtons()
+	{
+		return $this->buttons;
+	}
+	
 	public static function SetInfoMsg(&$session, $msg, $redirect, $status="success")
 	{
 		if(IS_AJAX == true)
@@ -24,7 +55,7 @@ class impeesaLayer
 		return true;
 	}
 	
-	public static function GetInfoMsg(&$session)
+	public function GetInfoMsg(&$session)
 	{
 		if(isset($session['info_msg']))
 		{

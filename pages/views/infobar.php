@@ -7,7 +7,9 @@ class InfobarView extends AbstractView {
 	public function MainView()
 	{
 		include_once(PATH_CORE_CLASS."impeesaUser.class.php");
+		include_once(PATH_CORE_CLASS."impeesaLayer.class.php");
 		$user	= new impeesaUser($_SESSION);
+		$layer	= impeesaLayer::getInstance();
 		
 		$return	= array();
 		if($user->IsLogin() == true)
@@ -16,13 +18,22 @@ class InfobarView extends AbstractView {
 			$return[]	= array($this->tpl->load("_loginInfo", PATH_PAGES_TPL."infobar/"));
 		}
 		
-		$msg			= impeesaLayer::GetInfoMsg($_SESSION);
+		/**
+		 * Messages in Infobar
+		 */
+		$msg			= $layer->GetInfoMsg($_SESSION); //@FIXME: dont't use global $_SESSION!
 		if(!empty($msg['msg']))
 		{
 			$this->tpl->vars("info_msg",		$msg['msg']);
 			$this->tpl->vars("info_status",		$msg['status']);
-			$return[]		= array($this->tpl->load("_infoMsg", PATH_PAGES_TPL."infobar/"),
-									"right");
+			$return[]		= array($this->tpl->load("_infoMsg", PATH_PAGES_TPL."infobar/"), "right");
+		}
+		
+		$buttons		= $layer->GetButtons();
+		if(!empty($buttons))
+		{
+				$this->tpl->vars("buttons",		$this->CreateGrid($buttons));
+				$return[] 	= array($this->tpl->load("_buttons", PATH_PAGES_TPL."infobar/"), "right");
 		}
 
 		return $this->CreateGrid($return);
@@ -30,7 +41,7 @@ class InfobarView extends AbstractView {
 	
 	/**
 	 * Create grids from array.
-	 * @param array $content
+	 * @param array (2) $content
 	 * array can have a second value which define the align of the box
 	 */
 	private function CreateGrid(array $content)
