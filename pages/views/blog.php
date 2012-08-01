@@ -29,6 +29,13 @@ class BlogView extends AbstractView
 	{
 		include_once(PATH_MODEL."blog.php");
 		$this->model	= new BlogModel();
+		$layer			= impeesaLayer::getInstance();
+		
+		//Add Buttons
+		$this->tpl->vars("label",					"Foto hinzufügen");
+		$layer->AddButton($this->tpl->load("_form_file_upload"), "right");
+		$layer->AddButton($this->tpl->load("_saveButton", PATH_PAGES_TPL."blog/"));
+		
 		
 		if(!isset($data['submit']))
 		{			
@@ -53,6 +60,12 @@ class BlogView extends AbstractView
 	{
 		include_once(PATH_MODEL."blog.php");
 		$this->model	= new BlogModel();
+		$layer			= impeesaLayer::getInstance();
+		
+		//Add Buttons
+		$this->tpl->vars("label",					"Foto hinzufügen");
+		$layer->AddButton($this->tpl->load("_form_file_upload"), "right");
+		$layer->AddButton($this->tpl->load("_saveButton", PATH_PAGES_TPL."blog/"));
 		
 		if(!isset($data['submit']))
 		{
@@ -79,23 +92,13 @@ class BlogView extends AbstractView
 		include_once(PATH_MODEL."picture.php");
 		$this->model	= new PictureModel();
 		
+		//Not run into name conflict
+		$this->model->encodeFilename($file);
+		
 		if($this->model->UploadPicture($file, PATH_UPLOAD."blog/"))
 		{
 			return array('picture_link' => LINK_LIB."thumbnail/thumbnail.php?dir=blog&picture=".$file['name'], 'status' => 'File was uploaded successfuly!');
 		}
 		return array('status' => 'Something went wrong!');
-	}
-	
-	public function SidebarView()
-	{
-		$buttons	= "";
-		$this->tpl->vars("label",					"Foto hinzufügen");
-		$buttons	.= $this->tpl->load("_form_file_upload");
-		
-		$buttons	.= $this->tpl->load("_saveButton", PATH_PAGES_TPL."blog/");
-		
-		$this->tpl->vars("content",		$buttons);
-		
-		return $this->tpl->load("_actionButton", PATH_PAGES_TPL."infobar/");
 	}
 }

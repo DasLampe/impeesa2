@@ -5,6 +5,13 @@
 // +----------------------------------------------------------------------+
 class PictureModel extends AbstractModel
 {
+	public function encodeFilename(&$file)
+	{
+		$file_ext		= explode('.', $file['name']);
+		$file['name']	= md5($file['name'].time()).'.'.$file_ext[count($file_ext)-1];
+		return $file['name'];
+	}
+	
 	public function UploadPicture(array $file, $dir)
 	{
 		if(!file_exists($dir))

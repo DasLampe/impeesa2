@@ -5,7 +5,7 @@
 // +----------------------------------------------------------------------+
 ?>
 <h2>Tag {day} - {headline}</h2>
-<div>
+<div class="ym-clearfix">
 {content}
 </div>
 <div class="info" align="right">{publish}</div>
