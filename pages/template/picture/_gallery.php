@@ -4,8 +4,6 @@
 // | Encoding:  UTF-8 |
 // +----------------------------------------------------------------------+
 ?>
-{dropbox}
-<hr>
-<div id="gallery">
+<div id="gallery" class="ym-clearfix">
 	{picture_gallery}
 </div>

@@ -7,9 +7,17 @@ class PictureController extends AbstractController
 {
 	public function FactoryController()
 	{
-		/**
-		 * DON'T USE!!
-		 */
+		include_once(PATH_VIEW."picture.php");
+		$this->view	= new PictureView();
+		
+		if(!isset($this->param[1]))
+		{
+			return $this->view->MainView();
+		}
+		else
+		{
+			return $this->view->AlbumView($this->param[1]);
+		}
 	}
 	
 	public function AdminController()

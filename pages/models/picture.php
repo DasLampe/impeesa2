@@ -31,12 +31,12 @@ class PictureModel extends AbstractModel
 		return false;
 	}
 
-	public function GetMyPicture($dir, $picture_start=0, $picture_end=-1)
+	public function GetAlbumPicture($dir, $picture_start=0, $picture_end=-1)
 	{
-		if(file_exists($dir))
+		if(file_exists(PATH_UPLOAD.'picture/'.$dir))
 		{
 			$picture	= array();
-			$handle		= opendir($dir);
+			$handle		= opendir(PATH_UPLOAD.'picture/'.$dir);
 			while(false !== ($file	= readdir($handle)))
 			{
 				if(preg_match("/.(jpg|jpeg)$/i",$file))
@@ -114,4 +114,40 @@ class PictureModel extends AbstractModel
         }
         return count($picture);
 	}
+	
+	public function GetAlbums()
+	{
+		$year		= '';
+		$handle		= opendir(PATH_UPLOAD.'picture/');
+		while(false !== ($dir	= readdir($handle)))
+		{
+			if(preg_match('/[0-9]{4}_(.*)/', $dir))
+			{
+				if($year != substr($dir, 0,4))
+				{
+					$year	= substr($dir,0,4);
+				}
+	
+				$album[$year][]		= $dir;
+			}
+		}
+	
+		krsort($album);
+	
+		return $album;
+	}
+	
+	public function DecodeAlbumName($album_name)
+	{
+		$info				= array();
+	
+		$system				= array('_','oe','ae','ue','Oe','Ae','Ue',);
+		$user				= array(' ','ö','ä','ü','Ö','Ä','Ü',);
+	
+		$info['headline']	= str_replace($system, $user, substr($album_name,5));
+		$info['year']		= substr($album_name,0,4);
+	
+		return $info;
+	}
+	
 }
