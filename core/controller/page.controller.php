@@ -25,12 +25,7 @@ class pageController
 			include_once(PATH_CONTROLLER."sidebar.php");
 			$sidebar				= new SidebarController($this->param);
 			$tpl->vars("sidebar",	$sidebar->factoryController());
-			
-			//Infobar
-			include_once(PATH_CONTROLLER."infobar.php");
-			$infobar				= new InfobarController($this->param);
-			$tpl->vars("infobar",	$infobar->factoryController());
-	
+
 			//Content
 			if(file_exists(PATH_CONTENT.$this->param[0].".php") && !file_exists(PATH_CONTROLLER.$this->param[0].".php"))
 			{
@@ -54,6 +49,15 @@ class pageController
 		{
 			$this->tpl->vars("page_content", $e->getCustomMessage());
 		}
+		
+		/**
+		 * Infobar
+		 * @info: placed here, because you can set some buttons in the skript 
+		 */
+		include_once(PATH_CONTROLLER."infobar.php");
+		$infobar				= new InfobarController($this->param);
+		$tpl->vars("infobar",	$infobar->factoryController());
+		
 		
 		/**
 		 * Handle JSON
