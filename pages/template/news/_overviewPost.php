@@ -4,8 +4,14 @@
 // | Encoding:  UTF-8 |
 // +----------------------------------------------------------------------+
 ?>
-<h2>Tag {day} - {headline}</h2>
-<div class="ym-clearfix">
-{content}
-</div>
-<div class="info" align="right">{publish}</div>
+<tr>
+	<td>
+		<a href="{LINK_MAIN}admin/news/edit/{id}" class="ym-button ym-edit">Ändern</a>
+	</td>
+	<td>
+		{headline}
+	</td>
+	<td>
+		{published}
+	</td>
+</tr>

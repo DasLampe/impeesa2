@@ -3,26 +3,26 @@
 // | Copyright (c) 2012 DasLampe <daslampe@lano-crew.org> |
 // | Encoding:  UTF-8 |
 // +----------------------------------------------------------------------+
-class BlogController extends AbstractController
+class NewsController extends AbstractController
 {
 	public function factoryController()
 	{
-		include_once(PATH_VIEW."blog.php");
-		$this->view	= new BlogView();
+		include_once(PATH_VIEW."news.php");
+		$this->view	= new NewsView();
 		
 		return $this->view->MainView();
 	}
 	
 	public function AdminController()
 	{
-		include_once(PATH_VIEW."blog.php");
-		$this->view	= new BlogView();
+		include_once(PATH_VIEW."news.php");
+		$this->view	= new NewsView();
 		
 		if(isset($_FILES['file']))
 		{
 			return json_encode($this->view->UploadPictureView($_FILES['file']));
 		}
-		switch($this->param[2])
+		switch(@$this->param[2])
 		{
 			case 'add':
 				if(!isset($_POST['submit']))
@@ -38,6 +38,8 @@ class BlogController extends AbstractController
 				}
 				return json_encode($this->view->EditView($this->param[3], $_POST));
 				break;
+			default:
+				return $this->view->OverviewView();
 		}
 	}
 }

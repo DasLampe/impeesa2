@@ -64,8 +64,8 @@ class AdminView extends AbstractView {
 					"page_title"	=> "User hinzufügen",
 				),
 				array(
-					"page_url"		=> LINK_MAIN."admin/blog/add",
-					"page_title"	=> "Blogpost hinzufügen",
+					"page_url"		=> LINK_MAIN."admin/news",
+					"page_title"	=> "Neuigkeiten verwalten",
 				),
 		);
 		

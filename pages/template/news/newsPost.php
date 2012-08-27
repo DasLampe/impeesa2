@@ -4,8 +4,8 @@
 // | Encoding:  UTF-8 |
 // +----------------------------------------------------------------------+
 ?>
-<ul>
-	<li><a href="<?= LINK_MAIN; ?>home">Startseite</a></li>
-	<li><a href="<?= LINK_MAIN; ?>news">News</a>
-	<li><a href="<?= LINK_MAIN; ?>admin/login">Intern</a></li>
-</ul>
+<h2>{headline}</h2>
+<div class="ym-clearfix">
+{content}
+</div>
+<div class="info" align="right">{publish}</div>
