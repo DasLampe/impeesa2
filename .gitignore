@@ -1,5 +1,5 @@
 tmp/*
-uploads/*/
+uploads/**/*
 !README
 
 *.conf.php

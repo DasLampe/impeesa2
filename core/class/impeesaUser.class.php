@@ -206,6 +206,7 @@ class impeesaUser {
 	
 	public function SetLogout()
 	{
+		$session_key		= substr(md5(time()), 0,6);
 		$sth	= $this->db->prepare("UPDATE ".MYSQL_PREFIX."users SET
 									session_fingerprint	= '',
 									session_key			= :session_key

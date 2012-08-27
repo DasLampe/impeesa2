@@ -21,16 +21,13 @@ body
 
 .info-msg
 {
-	-webkit-box-shadow: #666 0px 2px 3px;
-	-moz-box-shadow: #666 0px 2px 3px;
-	box-shadow: #666 0px 2px 3px;
-	background: #EEFF99;
-	background: -webkit-gradient(linear, 0 0, 0 bottom, from(#EEFF99), to(#66EE33));
-	background: -webkit-linear-gradient(#EEFF99, #66EE33);
-	background: -moz-linear-gradient(#EEFF99, #66EE33);
-	background: -ms-linear-gradient(#EEFF99, #66EE33);
-	background: -o-linear-gradient(#EEFF99, #66EE33);
-	background: linear-gradient(#EEFF99, #66EE33);
+	background-color: #5BB75B;
+	background-image: -ms-linear-gradient(top, #62C462, #51A351);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#62C462), to(#51A351));
+	background-image: -webkit-linear-gradient(top, #62C462, #51A351);
+	background-image: -o-linear-gradient(top, #62C462, #51A351);
+	background-image: -moz-linear-gradient(top, #62C462, #51A351);
+	background-image: linear-gradient(top, #62C462, #51A351);
 	color: #000000;
 	padding: 0 10px;
 }
