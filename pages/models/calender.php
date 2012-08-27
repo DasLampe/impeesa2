@@ -19,7 +19,8 @@ class CalenderModel extends AbstractModel
 	
 	public function GetAllEvents()
 	{
-		return $this->api->group(7)->events('start_date > "'.date("Y-m-d", time()).'"');
+		$scoutNet_Id=7;
+		return $this->api->group($scoutNet_Id)->events('start_date > "'.date("Y-m-d", time()).'"');
 	}
 	
 	public function FilterGroupFromKeywords($keywords) {

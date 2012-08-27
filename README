@@ -1,1 +1,13 @@
 CMS for Scouts ... more infos coming soon
+
+
+INSTALL:
+- Rename db.conf.sample to config/db.conf.php and fill your data
+- Edit LINK_MAIN in config/path.conf.php
+- Import last file from sqldump/
+- Set chmod 0777 for uploads/ (in some cases you must set chmod for subdirectories to!) & tmp/
+- Set title and some other in template/layout.php
+- Use impeesa! ;) (Defaultadminuser: DasLampe (Password: Test123))
+
+ScoutNet-Calender:
+if you like to use the ScoutNet-Calender, you must set our ID in pages/models/calender.php (Line 22)
