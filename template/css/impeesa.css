@@ -1,0 +1,18 @@
+@CHARSET "UTF-8";
+/** ==========================================
+=========== Style for impeesa core! ==========
+============================================== **/
+
+/** Hack for info message, to display centered **/
+#info-msg-wrapper {
+	position: fixed;
+		bottom: 10px;
+	width: 100%;
+}
+
+#info-msg {
+	margin: 0 auto;
+	width: 500px;
+	border: 1px solid #000000;
+	padding: 15px 15px 15px 40px;
+}

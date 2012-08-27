@@ -71,7 +71,7 @@ class NewsView extends AbstractView
 		else
 		{
 			$this->model->InsertNewsPost($data['headline'], $data['content'], $data['publish']);
-			return array('msg' => "Erfolgreich gespeichert!");
+			return impeesaLayer::SetInfoMsg($_SESSION, "Erfolgreich gespeichert!", CURRENT_PAGE, "success");
 		}
 	}
 	
@@ -101,7 +101,7 @@ class NewsView extends AbstractView
 		else
 		{
 			$this->model->UpdateNewsPost($id, $data['headline'], $data['content'], $data['publish']);
-			return array('msg' => "Erfolgreich gespeichert!");
+			return impeesaLayer::SetInfoMsg($_SESSION, "Erfolgreich gespeichert!", CURRENT_PAGE, "success");
 		}
 	}
 	
@@ -115,8 +115,8 @@ class NewsView extends AbstractView
 		
 		if($this->model->UploadPicture($file, PATH_UPLOAD."news/"))
 		{
-			return array('picture_link' => LINK_LIB."thumbnail/thumbnail.php?dir=news&picture=".$file['name'], 'status' => 'File was uploaded successfuly!');
+			return json_encode(array('picture_link' => LINK_LIB."thumbnail/thumbnail.php?dir=news&picture=".$file['name'], 'status' => 'File was uploaded successfuly!'));
 		}
-		return array('status' => 'Something went wrong!');
+		return impeesaLayer::SetInfoMsg($_SESSION, "Bild konnte nicht hochgeladen werden", "", "Something went wrong!");
 	}
 }

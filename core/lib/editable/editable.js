@@ -7,7 +7,7 @@ $(document).ready(function() {
 		{
 			$(this).empty();
 		}
-	})*/;
+	});*/
 	
 	$('#content[contenteditable="true"]').focusout(function() {
 		if(!$(this).text().length)
@@ -66,7 +66,7 @@ $(document).ready(function() {
 			typeData: "json",
 			data: data+"&submit=True",
 			success: function(data) {
-				alert(data.msg);
+				show_msg(data.msg, data.status);
 				$('#save').remove();
 			}
 		});

@@ -20,7 +20,7 @@ class NewsController extends AbstractController
 		
 		if(isset($_FILES['file']))
 		{
-			return json_encode($this->view->UploadPictureView($_FILES['file']));
+			return $this->view->UploadPictureView($_FILES['file']);
 		}
 		switch(@$this->param[2])
 		{
@@ -29,14 +29,14 @@ class NewsController extends AbstractController
 				{
 					return $this->view->AddView($_POST);
 				}
-				return json_encode($this->view->AddView($_POST));
+				return $this->view->AddView($_POST);
 				break;
 			case 'edit':
 				if(!isset($_POST['submit']))
 				{
 					return $this->view->EditView($this->param[3], $_POST);
 				}
-				return json_encode($this->view->EditView($this->param[3], $_POST));
+				return $this->view->EditView($this->param[3], $_POST);
 				break;
 			default:
 				return $this->view->OverviewView();

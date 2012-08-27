@@ -15,7 +15,7 @@
 	<link href="<?= LINK_TPL; ?>css/style.css" rel="stylesheet" type="text/css" />
 	<script type="text/javascript" src="<?= LINK_MAIN; ?>core/lib/js/jquery.min.js"></script>
 	<script type="text/javascript" src="<?= LINK_MAIN; ?>core/lib/js/webtoolkit.base64.js"></script>
-	<script type="text/javascript" src="<?= LINK_MAIN; ?>core/lib/js/email_protection.js"></script>
+	<script type="text/javascript" src="<?= LINK_MAIN; ?>core/lib/js/impeesaCore.js"></script>
 	{js_files}
 	{css_files}
 </head>
@@ -34,7 +34,6 @@
 	</div>
 </div>
 {/endif}
-
 	<header>
 		<div class="ym-wrapper">
 			<div class="ym-wbox">
