@@ -28,6 +28,9 @@ class NewsView extends AbstractView
 	{
 		include_once(PATH_MODEL."news.php");
 		$this->model	= new NewsModel();
+		$layer			= impeesaLayer::getInstance();
+		
+		$layer->AddButton('<a href="'.LINK_MAIN.'admin/news/add" class="ym-add">Neuigkeiten hinzufügen</a>');
 		
 		$posts="";
 		foreach($this->model->GetNewsPosts() as $news_post)
@@ -45,7 +48,7 @@ class NewsView extends AbstractView
 	public function AddView($data)
 	{
 		include_once(PATH_MODEL."news.php");
-		$this->model	= new newsModel();
+		$this->model	= new NewsModel();
 		$layer			= impeesaLayer::getInstance();
 		
 		//Add Buttons
@@ -67,7 +70,7 @@ class NewsView extends AbstractView
 		}
 		else
 		{
-			$this->model->InsertnewsPost($data['headline'], $data['content'], $data['publish']);
+			$this->model->InsertNewsPost($data['headline'], $data['content'], $data['publish']);
 			return array('msg' => "Erfolgreich gespeichert!");
 		}
 	}
@@ -75,7 +78,7 @@ class NewsView extends AbstractView
 	public function EditView($id, $data)
 	{
 		include_once(PATH_MODEL."news.php");
-		$this->model	= new newsModel();
+		$this->model	= new NewsModel();
 		$layer			= impeesaLayer::getInstance();
 		
 		//Add Buttons
@@ -85,7 +88,7 @@ class NewsView extends AbstractView
 		
 		if(!isset($data['submit']))
 		{
-			$news_post		= $this->model->GetnewsPost($id);
+			$news_post		= $this->model->GetNewsPost($id);
 			$this->tpl->addJs("editable.js",		LINK_CORE_LIB."editable/");
 
 			$this->tpl->vars("headline",		$news_post['headline']);
@@ -97,7 +100,7 @@ class NewsView extends AbstractView
 		}
 		else
 		{
-			$this->model->UpdatenewsPost($id, $data['headline'], $data['content'], $data['publish']);
+			$this->model->UpdateNewsPost($id, $data['headline'], $data['content'], $data['publish']);
 			return array('msg' => "Erfolgreich gespeichert!");
 		}
 	}
