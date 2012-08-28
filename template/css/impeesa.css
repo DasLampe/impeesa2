@@ -16,3 +16,27 @@
 	border: 1px solid #000000;
 	padding: 15px 15px 15px 40px;
 }
+
+.success#info-msg {
+	background-image: url({LINK_TPL}img/success.png);
+	background-repeat: no-repeat;
+	background-position: center left;
+}
+
+.error#info-msg {
+	background-image: url({LINK_TPL}img/error.png);
+	background-repeat: no-repeat;
+	background-position: center left;
+}
+
+.waring#info-msg {
+	background-image: url({LINK_TPL}img/warning.png);
+	background-repeat: no-repeat;
+	background-position: center left;
+}
+
+.info#info-msg {
+	background-image: url({LINK_TPL}img/info.png);
+	background-repeat: no-repeat;
+	background-position: center left;
+}
