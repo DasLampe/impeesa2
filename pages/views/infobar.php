@@ -14,20 +14,12 @@ class InfobarView extends AbstractView {
 		$return	= array();
 		if($user->IsLogin() == true)
 		{
+			$layer->AddButton('<a href="'.LINK_MAIN.'/userManagement/profile" class="ym-edit">Profil</a>');
+			
 			$this->tpl->vars("username",		$user->GetUsernameById($_SESSION['user_id']));
 			$return[]	= array($this->tpl->load("_loginInfo", PATH_PAGES_TPL."infobar/"));
 		}
 		
-		/**
-		 * Messages in Infobar
-		 */
-		$msg			= $layer->GetInfoMsg($_SESSION); //@FIXME: dont't use global $_SESSION!
-		if(!empty($msg['msg']))
-		{
-			$this->tpl->vars("info_msg",		$msg['msg']);
-			$this->tpl->vars("info_status",		$msg['status']);
-			$return[]		= array($this->tpl->load("_infoMsg", PATH_PAGES_TPL."infobar/"), "right");
-		}
 		
 		$buttons		= $layer->GetButtons();
 		if(!empty($buttons))

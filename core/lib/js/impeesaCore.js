@@ -18,6 +18,12 @@ $(document).ready(function () {
 			}
 		}
 	});
+	
+	//Remove info msg, if created by impeesaLayer
+	$('#info-msg-wrapper').each(function() {
+		setTimeout("$('#info-msg-wrapper').fadeOut('slow')", 5000);
+		setTimeout("$('#info-msg-wrapper').remove()", 6000); //Hack to remove container, but show nice fade out.
+	});
 });
 
 /*

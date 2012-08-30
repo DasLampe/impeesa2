@@ -58,6 +58,21 @@ class pageController
 		$infobar				= new InfobarController($this->param);
 		$tpl->vars("infobar",	$infobar->factoryController());
 		
+		//Info message
+		/**
+		 * Messages in Infobar
+		 */
+		include_once(PATH_CORE_CLASS."impeesaLayer.class.php");
+		$layer	= impeesaLayer::getInstance();
+		$this->tpl->vars("info_msg",			""); //init info_msg
+		$msg			= $layer->GetInfoMsg($_SESSION);
+		if(!empty($msg['msg']))
+		{
+			$this->tpl->vars("message",			$msg['msg']);
+			$this->tpl->vars("info_status",		$msg['status']);
+			$this->tpl->vars("info_msg",		$this->tpl->load("_infoMsg"));
+		}
+		
 		
 		/**
 		 * Handle JSON

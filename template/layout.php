@@ -67,5 +67,6 @@
 	<footer>
 		Powered by <a href="http://daslampe.lano-crew.org">DasLampe</a>
 	</footer>
+	{info_msg}
 </body>
 </html>

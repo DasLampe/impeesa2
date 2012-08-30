@@ -4,4 +4,4 @@
 // | Encoding:  UTF-8 |
 // +----------------------------------------------------------------------+
 ?>
-<a href="{LINK_ACP}logout">Als {username} abmelden</a>
+<a href="{LINK_ACP}logout" class="ym-next">{username} abmelden</a>

@@ -4,4 +4,4 @@
 // | Encoding:  UTF-8 |
 // +----------------------------------------------------------------------+
 ?>
-<div class="{info_status} info-msg" align="center">{info_msg}</div>
+<div id="info-msg-wrapper"><div id="info-msg" class="{info_status}">{message}</div></div>
