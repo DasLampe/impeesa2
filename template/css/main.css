@@ -5,34 +5,6 @@ body
 	font-family: 'Trebuchet MS', Verdana, Helvetica, Arial, sans-serif;
 }
 
-/*************************+++Infobar+++***************************/
-#infobar
-{
-	background: -webkit-gradient(linear, 0 0, 0 bottom, from(#333), to(#222));
-	background: -webkit-linear-gradient(top, #333, #222);
-	background: -moz-linear-gradient(#333, #222);
-	background: -ms-linear-gradient(#333, #222);
-	background: -o-linear-gradient(#333, #222);
-	background: linear-gradient(#333, #222);
-	height: 1em;
-	padding: 10px;
-	color: #FFFFFF;
-}
-
-.info-msg
-{
-	background-color: #5BB75B;
-	background-image: -ms-linear-gradient(top, #62C462, #51A351);
-	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#62C462), to(#51A351));
-	background-image: -webkit-linear-gradient(top, #62C462, #51A351);
-	background-image: -o-linear-gradient(top, #62C462, #51A351);
-	background-image: -moz-linear-gradient(top, #62C462, #51A351);
-	background-image: linear-gradient(top, #62C462, #51A351);
-	color: #000000;
-	padding: 0 10px;
-}
-
-
 /*********************+++Header+++********************************/
 header
 {

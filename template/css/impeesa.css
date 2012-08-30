@@ -40,3 +40,37 @@
 	background-repeat: no-repeat;
 	background-position: center left;
 }
+
+/*************************+++Infobar+++***************************/
+#infobar
+{
+	background: -webkit-gradient(linear, 0 0, 0 bottom, from(#333), to(#222));
+	background: -webkit-linear-gradient(top, #333, #222);
+	background: -moz-linear-gradient(#333, #222);
+	background: -ms-linear-gradient(#333, #222);
+	background: -o-linear-gradient(#333, #222);
+	background: linear-gradient(#333, #222);
+	height: 2em;
+	color: #FFFFFF;
+}
+
+#infobar .infobar-button {
+	float: right;
+}
+
+#infobar a, #infobar li{
+	color: #ffffff;
+	display: block;
+	height: 0.5em;
+	padding: 5px 15px;
+	border-right: 1px solid #ffffff;
+	border-left: 1px solid #ffffff;
+}
+
+#infobar a:hover, #infobar li:hover {
+	background: -webkit-linear-gradient(rgba(255,255,255,.3),transparent);
+	background: -moz-linear-gradient(rgba(255,255,255,.3),transparent);
+	background: -ms-linear-gradient(rgba(255,255,255,.3),transparent);
+	background: -o-linear-gradient(rgba(255,255,255,.3),transparent);
+	background: linear-gradient(rgba(255,255,255,.3),transparent);
+}

@@ -28,9 +28,7 @@
 {if} {infobar} != "" {/if}
 <div id="infobar">
 	<div class="ym-wrapper">
-		<div class="ym-grid">
-			{infobar}
-		</div>
+		{infobar}
 	</div>
 </div>
 {/endif}

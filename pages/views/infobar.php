@@ -15,17 +15,17 @@ class InfobarView extends AbstractView {
 		if($user->IsLogin() == true)
 		{
 			$layer->AddButton('<a href="'.LINK_MAIN.'/userManagement/profile" class="ym-edit">Profil</a>');
-			
-			$this->tpl->vars("username",		$user->GetUsernameById($_SESSION['user_id']));
-			$return[]	= array($this->tpl->load("_loginInfo", PATH_PAGES_TPL."infobar/"));
+			$layer->AddButton('<a href="'.LINK_ACP.'/logout" class="ym-next">Abmelden</a>');
 		}
 		
 		
 		$buttons		= $layer->GetButtons();
 		if(!empty($buttons))
 		{
-				$this->tpl->vars("buttons",		$this->CreateGrid($buttons));
-				$return[] 	= array($this->tpl->load("_buttons", PATH_PAGES_TPL."infobar/"), "right");
+			foreach($buttons as $button)
+			{
+				$return[]	= $button;
+			}
 		}
 
 		return $this->CreateGrid($return);
@@ -38,24 +38,14 @@ class InfobarView extends AbstractView {
 	 */
 	private function CreateGrid(array $content)
 	{
-		if(isset($content[0]))
+		$content	= array_reverse($content);
+		if(isset($content) && !empty($content))
 		{
-			$this->tpl->vars("grid_width",		100 / count($content));
 			$return	= "";
-			foreach($content as $grid)
+			foreach($content as $button)
 			{
-				$this->tpl->vars("content",		$grid[0]);
-				switch(@$grid[1])
-				{
-					case "right":
-						$this->tpl->vars("grid_align",	"r");
-						break;
-					case "left":
-					default:
-						$this->tpl->vars("grid_align",	"l");
-						break;
-				}
-				$return		.= $this->tpl->load("_grid");
+				$this->tpl->vars("button",		$button);
+				$return		.= $this->tpl->load("_button", PATH_PAGES_TPL."infobar/");
 			}
 			return $return;
 		}

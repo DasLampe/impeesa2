@@ -4,6 +4,6 @@
 // | Encoding:  UTF-8 |
 // +----------------------------------------------------------------------+
 ?>
-<div class="ym-g{grid_width} ym-g{grid_align}">
-	{content}
+<div class="infobar-button">
+{button}
 </div>

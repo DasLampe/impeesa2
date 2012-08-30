@@ -4,7 +4,7 @@
 // | Encoding:  UTF-8 |
 // +----------------------------------------------------------------------+
 ?>
-<li id="add-file" class="ym-add">
+<a href="#" id="add-file" class="ym-add">
 	<label for="file[]">{label}</label>
-</li>
+</a>
 <input type="file" id="file2upload" name="file[]" multiple style="display: none;">

@@ -21,7 +21,7 @@ class impeesaLayer
 	{
 		if(!empty($button_content))
 		{
-			$this->buttons[]	= array($button_content, $align);
+			$this->buttons[]	= $button_content;
 			return true;
 		}
 		return false;

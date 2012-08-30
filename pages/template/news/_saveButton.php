@@ -4,4 +4,4 @@
 // | Encoding:  UTF-8 |
 // +----------------------------------------------------------------------+
 ?>
-<li id="save" class="ym-save ">Veröffentlichen</li>
+<a href="#" id="save" class="ym-save ">Veröffentlichen</a>
