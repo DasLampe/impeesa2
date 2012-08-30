@@ -115,12 +115,12 @@ class impeesaUser {
 		return $row['salt'];
 	}
 	
-	public function CreateUser($username, $password, $email)
+	public function CreateUser($username, $password, $first_name, $name, $email)
 	{
 		$sth	= $this->db->prepare("INSERT INTO ".MYSQL_PREFIX."users
-									(username, password, salt, email, session_key)
+									(username, password, salt, first_name, name, email, session_key)
 									VALUES
-									(:username, :password, :salt, :email, :session_key)");
+									(:username, :password, :salt, :first_name, :name, :email, :session_key)");
 		
 		$created_password	= $this->CreatePasswordHash($password);
 		$session_key		= substr(md5(time()), 0,6);
@@ -128,10 +128,22 @@ class impeesaUser {
 		$sth->bindParam(":username",		$username);
 		$sth->bindParam(":password",		$created_password[0]);
 		$sth->bindParam(":salt",			$created_password[1]);
+		$sth->bindParam(":first_name",		$first_name);
+		$sth->bindParam(":name",			$name);
 		$sth->bindParam(":email",			$email);
 		$sth->bindParam(":session_key",		$session_key);
 		
 		if($sth->execute())
+		{
+			return true;
+		}
+		return false;
+	}
+	
+	public function RemoveUser($user_id)
+	{
+		$sth	= $this->db->prepare("DELETE FROM ".MYSQL_PREFIX."users WHERE id = :user_id");
+		if($sth->execute(array(":user_id" => $user_id)))
 		{
 			return true;
 		}
@@ -252,5 +264,33 @@ class impeesaUser {
 		$sth->execute(array(":user_id" => $user_id));
 		$row	= $sth->fetch();
 		return $row['email'];
+	}
+	
+	public function GetUserInfo($user_id)
+	{
+		$sth	= $this->db->prepare("SELECT username, email, name, first_name
+									FROM ".MYSQL_PREFIX."users
+									WHERE id = :user_id");
+		$sth->execute(array(":user_id" => $user_id));
+		$row	= $sth->fetch();
+		return $row;
+	}
+	
+	public function SaveUserData($user_id, $first_name, $name, $email)
+	{
+		$sth	= $this->db->prepare("UPDATE ".MYSQL_PREFIX."users SET
+									first_name	= :first_name,
+									name		= :name,
+									email		= :email
+									WHERE id	= :user_id");
+		$sth->bindParam(":user_id",			$user_id);
+		$sth->bindParam(":first_name",		$first_name);
+		$sth->bindParam(":name",			$name);
+		$sth->bindParam(":email",			$email);
+		if($sth->execute())
+		{
+			return true;
+		}
+		return false;
 	}
 }

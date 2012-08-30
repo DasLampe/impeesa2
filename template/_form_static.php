@@ -4,9 +4,7 @@
 // | Encoding:  UTF-8 |
 // +----------------------------------------------------------------------+
 ?>
-<h1>Neuigkeiten verwalten</h1>
-<table>
-	<tbody>
-		{posts}
-	</tbody>
-</table>
+<div class="ym-fbox-text">
+	<label for="{name}">{label}</label> 
+	<input type="text" name="{name}" value="{value}" readonly /> (nicht änderbar)
+</div>

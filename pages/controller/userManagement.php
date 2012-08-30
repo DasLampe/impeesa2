@@ -7,9 +7,23 @@ class userManagementController extends AbstractController
 {
 	public function FactoryController()
 	{
-		/**
-		 * DON'T USE!!
-		 */
+		include_once(PATH_CORE_CLASS."impeesaUser.class.php");
+		include_once(PATH_VIEW."userManagement.php");
+		$user		= new impeesaUser($_SESSION);
+		$this->view	= new userManagementView();
+		
+		if($user->IsLogin() == false)
+		{
+			header("Location:".LINK_ACP."login");
+			exit();
+		}
+		
+		switch(@$this->param[2])
+		{
+			default:
+				return $this->view->ProfileView($_POST, $_SESSION['user_id'], $user);
+				break;
+		}
 	}
 	
 	public function AdminController()
@@ -21,10 +35,19 @@ class userManagementController extends AbstractController
 		$this->view	= new userManagementView();
 		
 		
-		switch(@$this->param[2])
+		switch(@strtolower($this->param[2]))
 		{
-			case 'signup':
+			case 'adduser':
 				return $this->view->SignUpView($_POST, $user);
+				break;
+			case 'removeuser':
+				return $this->view->RemoveUserView($this->param[3], $user);
+				break;
+			case 'edituser':
+				return $this->view->ProfileView($_POST, $this->param[3], $user);
+				break;
+			default:
+				return $this->view->AllUserView($user);
 				break;
 		}
 	}

@@ -83,7 +83,7 @@ class NewsView extends AbstractView
 		
 		//Add Buttons
 		$this->tpl->vars("label",					"Bild hinzufügen");
-		$layer->AddButton($this->tpl->load("_form_file_upload"), "right");
+		$layer->AddButton($this->tpl->load("_form_file_upload"));
 		$layer->AddButton($this->tpl->load("_saveButton", PATH_PAGES_TPL."news/"));
 		
 		if(!isset($data['submit']))

@@ -1,0 +1,3 @@
+Use for SQL Migrationsscripts.
+
+In the future impeesa2 has a "one-click-Update" function, so the script must now, what changes in database structure

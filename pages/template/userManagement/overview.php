@@ -4,9 +4,14 @@
 // | Encoding:  UTF-8 |
 // +----------------------------------------------------------------------+
 ?>
-<h1>Neuigkeiten verwalten</h1>
+<h1>{headline}</h1>
 <table>
-	<tbody>
-		{posts}
-	</tbody>
+	<tr>
+		<th></th>
+		<th></th>
+		<th>Benutzername</th>
+		<th>Name</th>
+		<th>Email</th>
+	</tr>
+	{users}
 </table>

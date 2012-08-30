@@ -24,12 +24,12 @@ class AdminController extends AbstractController {
 			header("Location: ".LINK_MAIN."admin/home/");
 		}
 		
-		switch($this->param[1])
+		switch(strtolower($this->param[1]))
 		{
 			case 'logout':
 				return $this->view->LogoutView($user);
 				break;
-			case 'userManagement':
+			case 'usermanagement':
 				$site	= "userManagement";
 				break;
 			case 'news':

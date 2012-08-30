@@ -123,6 +123,9 @@ class impeesaForm {
 			case 'email':
 				return $this->tpl->load("_form_text");
 				break;
+			case 'static':
+				return $this->tpl->load("_form_static");
+				break;
 			case 'password':
 				return $this->tpl->load("_form_pass");
 				break;

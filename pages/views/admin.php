@@ -60,11 +60,11 @@ class AdminView extends AbstractView {
 	{
 		$menu_array	= array(
 				array(
-					"page_url"		=> LINK_MAIN."admin/userManagement/signup",
-					"page_title"	=> "User hinzufügen",
+					"page_url"		=> LINK_ACP."userManagement/allUser",
+					"page_title"	=> "Benutzer verwalten",
 				),
 				array(
-					"page_url"		=> LINK_MAIN."admin/news",
+					"page_url"		=> LINK_ACP."news",
 					"page_title"	=> "Neuigkeiten verwalten",
 				),
 		);
