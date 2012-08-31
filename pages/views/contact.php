@@ -65,7 +65,7 @@ class ContactView extends AbstractView
 				$form->SetErrorMsg("Email konnte nicht gesendet werden.");
 				return $form->GetForm($form_fields, CURRENT_PAGE);
 			}
-			return impeesaLayer::SetInfoMsg($_SESSION, "Email wurder erfolgreich versendet", CURRENT_PAGE);
+			return impeesaLayer::SetInfoMsg($_SESSION, "Email wurde erfolgreich versendet", CURRENT_PAGE);
 		}
 	}
 }

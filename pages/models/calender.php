@@ -19,7 +19,7 @@ class CalenderModel extends AbstractModel
 	
 	public function GetAllEvents()
 	{
-		$scoutNet_Id=7;
+		$scoutNet_Id=impeesaConfig::get('scoutNetId');
 		return $this->api->group($scoutNet_Id)->events('start_date > "'.date("Y-m-d", time()).'"');
 	}
 	

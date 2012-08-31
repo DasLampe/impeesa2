@@ -9,4 +9,5 @@ CREATE TABLE IF NOT EXISTS `impeesa2_config` (
 INSERT INTO `impeesa2_config` (`config_key`, `config_value`) VALUES
 ('adminEmail', 'daslampe@lano-crew.org'),
 ('unitname', 'DasLampe'),
-('version', '2.0.1');
+('version', '2.0.1')
+('scoutNetId', '7');
