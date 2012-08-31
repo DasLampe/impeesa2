@@ -134,6 +134,7 @@ class impeesaForm {
 				$this->tpl->vars("selected",	$this->IsSelectedField($field[4]));
 				
 				return $this->tpl->load("_form_option");
+				break;
 			case 'text':
 			case 'email':
 				return $this->tpl->load("_form_text");

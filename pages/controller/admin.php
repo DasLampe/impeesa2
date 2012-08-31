@@ -36,7 +36,7 @@ class AdminController extends AbstractController {
 				$site	= "news";
 				break;
 			default:
-				return $this->view->MainView();
+				return $this->view->ConfigView($_POST);
 				break;
 		}
 		

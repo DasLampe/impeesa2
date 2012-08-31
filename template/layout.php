@@ -35,7 +35,7 @@
 	<header>
 		<div class="ym-wrapper">
 			<div class="ym-wbox">
-				<h1>»‹ Impeesa2 - CMS for Scouts</h1>
+				<h1>»‹ <?= impeesaConfig::get('unitname'); ?></h1>
 			</div>
 		</div>
 	</header>

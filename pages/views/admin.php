@@ -6,8 +6,39 @@
 class AdminView extends AbstractView {
 	public function MainView()
 	{
-		$this->tpl->vars("content",		'<h1>Interner Bereich</h1>');
-		return $this->tpl->load("_content");
+	}
+	
+	public function ConfigView($data)
+	{
+		include_once(PATH_CORE_CLASS."impeesaForm.class.php");
+		$form			= new impeesaForm();
+		
+		$keys			= array("unitname", "adminEmail", "scoutNetId");
+		
+		$form_fields	= array(
+							array("fieldset", "Konfiguration", array(
+									array("static", impeesaConfig::getDescription("version"), "version", impeesaConfig::get("version")),
+								),
+							),
+							array("submit", "Ändern", "submit"),
+						);
+		foreach($keys as $key)
+		{
+			$form_fields[0][2][]	= array("text", impeesaConfig::getDescription($key), $key, impeesaConfig::get($key), True);
+		}
+		if(!isset($data['submit']) || $form->Validation($form_fields, $data) == false)
+		{
+			return $form->GetForm($form_fields, CURRENT_PAGE);
+		}
+		else
+		{
+			unset($data['submit']); //remove submit
+			foreach($data as $key=>$value)
+			{
+				impeesaConfig::set($key, $value);
+			}
+			return impeesaLayer::SetInfoMsg($_SESSION, "Konfiguration wurder erfolgreich geändert", CURRENT_PAGE);
+		}
 	}
 	
 	public function LoginView($data, $user)
