@@ -108,7 +108,7 @@ class impeesaForm {
 		$this->tpl->vars("label",		$field[1]);
 		$this->tpl->vars("name",		$field[2]);
 		$this->tpl->vars("value",		$field[3]);
-		$this->tpl->vars("required",	$this->isRequiredField($field[4]));
+		$this->tpl->vars("required",	$this->IsRequiredField($field[4]));
 			
 		switch(strtolower($field[0]))
 		{
@@ -119,6 +119,21 @@ class impeesaForm {
 				$this->tpl->vars("label",		$field[1]);
 				return $this->tpl->load("_form_fieldset");
 				break;
+			case 'select':
+				$this->tpl->vars("fields", $this->GetFormFields($field[3]));
+				
+				//redefine some vars
+				$this->tpl->vars("label",		$field[1]);
+				$this->tpl->vars("name",		$field[2]);
+				return $this->tpl->load("_form_select");
+				break;
+			case 'option':
+				//redefine some vars
+				$this->tpl->vars("value",		$field[2]);
+				$this->tpl->vars("disabled",	$this->IsDisabledField($field[3]));
+				$this->tpl->vars("selected",	$this->IsSelectedField($field[4]));
+				
+				return $this->tpl->load("_form_option");
 			case 'text':
 			case 'email':
 				return $this->tpl->load("_form_text");
@@ -151,5 +166,23 @@ class impeesaForm {
 		{
 			return 'required';
 		}
+	}
+	
+	private function IsDisabledField($disabled)
+	{
+		if($disabled == true)
+		{
+			return 'disabled="disabled"';
+		}
+		return '';
+	}
+	
+	private function IsSelectedField($selected)
+	{
+		if($selected == true)
+		{
+			return 'selected="selected"';
+		}	
+		return '';
 	}
 }

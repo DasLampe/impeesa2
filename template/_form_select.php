@@ -3,14 +3,10 @@
 // | Copyright (c) 2012 DasLampe <daslampe@lano-crew.org> |
 // | Encoding:  UTF-8 |
 // +----------------------------------------------------------------------+
-abstract class AbstractController {
-	protected $param;
-	protected $view;
-	
-	public function __construct($param)
-	{
-		$this->param = $param;
-	}
-	
-	abstract public function FactoryController();
-}
+?>
+<div class="ym-fbox-select">
+	<label for="{name}">{label}</label>
+	<select name="{name}" size="1">
+		{fields}
+	</select>
+</div>

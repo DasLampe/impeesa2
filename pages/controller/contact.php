@@ -3,14 +3,13 @@
 // | Copyright (c) 2012 DasLampe <daslampe@lano-crew.org> |
 // | Encoding:  UTF-8 |
 // +----------------------------------------------------------------------+
-abstract class AbstractController {
-	protected $param;
-	protected $view;
-	
-	public function __construct($param)
+class ContactController extends AbstractController
+{
+	public function FactoryController()
 	{
-		$this->param = $param;
+		include_once(PATH_VIEW."contact.php");
+		$this->view		= new ContactView();
+		
+		return $this->view->ContactFormView($_POST);
 	}
-	
-	abstract public function FactoryController();
 }

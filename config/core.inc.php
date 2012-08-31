@@ -16,6 +16,7 @@ else
 
 //Classes
 include_once(PATH_CORE_CLASS."impeesaDB.class.php");
+include_once(PATH_CORE_CLASS."impeesaConfig.class.php");
 include_once(PATH_CORE_CLASS."impeesaLog.class.php");
 include_once(PATH_CORE_CLASS."impeesaTemplate.class.php");
 include_once(PATH_CORE_CLASS."impeesaPostProccess.class.php");
