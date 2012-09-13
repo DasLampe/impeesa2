@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS `impeesa2_config` (
 INSERT INTO `impeesa2_config` (`config_key`, `config_value`) VALUES
 ('adminEmail', 'daslampe@lano-crew.org'),
 ('unitname', 'Impeesa2 - CMS for Scouts'),
-('version', '2.0.1')
+('version', '2.0.1'),
 ('scoutNetId', '7');
 
 ALTER TABLE `impeesa2_config` ADD `description` TEXT NOT NULL AFTER `config_value`;
