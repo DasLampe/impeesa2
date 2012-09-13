@@ -36,14 +36,18 @@ class impeesaLayer
 		return $this->buttons;
 	}
 	
-	public static function SetInfoMsg(&$session, $msg, $redirect, $status="success")
+	public static function SetInfoMsg(&$session, $msg, $redirect, $status="success", array $param=array())
 	{
 		if(IS_AJAX == true)
 		{
-			return json_encode(array(
-									"msg"		=> $msg,
-									"status"	=> $status,
-									));
+			$return	= array();
+			$return["msg"]		= $msg;
+			$return["status"]	= $status;
+			foreach($param as $key=>$value)
+			{
+				$return[$key]	= $value;
+			}
+			return json_encode($return);
 		}
 		else
 		{
