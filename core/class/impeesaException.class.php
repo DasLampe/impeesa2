@@ -17,7 +17,7 @@ class impeesaException extends Exception
 		return $tpl->load("error_exception");
 	}
 	
-	private function saveException()
+	protected function saveException()
 	{
 		$db					= impeesaDb::getConnection();
 		$exception_id		= substr(md5(uniqid(time(), TRUE)), 0, 5);
@@ -38,4 +38,15 @@ class impeesaException extends Exception
 							));
 		return $exception_id;
 	}
+}
+
+class impeesaPermissionException extends impeesaException
+{
+	public function getCustomMessage()
+	{
+		$exception_number	= $this->saveException();
+		$tpl				= impeesaTemplate::getInstance();
+		$tpl->vars("exception_number",		$exception_number);
+		return $tpl->load("permission_exception");
+	}	
 }

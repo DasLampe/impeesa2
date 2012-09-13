@@ -20,6 +20,7 @@ class pageController
 			$tpl				= $this->tpl;
 			$tpl->vars("CURRENT_PAGE",	CURRENT_PAGE);
 			$tpl->vars("LINK_ACP",		LINK_ACP);
+			$tpl->vars("CONFIG_admin_email",	impeesaConfig::get("adminEmail"));
 	
 			//Sidebar
 			include_once(PATH_CONTROLLER."sidebar.php");
@@ -47,7 +48,8 @@ class pageController
 		}
 		catch(impeesaException $e)
 		{
-			$this->tpl->vars("page_content", $e->getCustomMessage());
+			$page_content	= $e->getCustomMessage();
+			$this->tpl->vars("page_content", $page_content);
 		}
 		
 		/**
