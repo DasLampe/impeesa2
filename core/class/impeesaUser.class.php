@@ -293,8 +293,24 @@ class impeesaUser {
 		}
 		return false;
 	}
+
+	public function CanAdd()
+	{
+		if($this->IsLogin() == true)
+		{
+			return true;
+		}
+	}
 	
 	public function CanEdit()
+	{
+		if($this->IsLogin() == true)
+		{
+			return true;
+		}
+	}
+	
+	public function CanDelete()
 	{
 		if($this->IsLogin() == true)
 		{
