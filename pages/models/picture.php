@@ -14,15 +14,10 @@ class PictureModel extends AbstractModel
 	
 	public function UploadPicture(array $file, $dir)
 	{
-		if(!file_exists($dir))
-		{
-			mkdir($dir);
-		}
-
 		$savePath	= $dir.'/'.$file['name'];
 		if(!file_exists($savePath))
 		{
-			if($this->resize_picture4save($file, $savePath, 1024) === false)
+			if($this->resize_picture4save($file, $savePath, 640) === false)
 			{//if picture don't need to resize
 				if(move_uploaded_file($file['tmp_name'], $savePath))
 				{
@@ -114,7 +109,7 @@ class PictureModel extends AbstractModel
 
 	public function CountPicture($dir)
 	{
-        $picture    = $this->GetMyPicture($dir);
+        $picture	= $this->GetAlbumPicture($dir);
         if(!is_array($picture))
         {
             return 0;
@@ -144,17 +139,30 @@ class PictureModel extends AbstractModel
 		return $album;
 	}
 	
-	public function DecodeAlbumName($album_name)
+	public function ConvertAlbumName($album_name, $to="text")
 	{
 		$info				= array();
-	
+
 		$system				= array('_','oe','ae','ue','Oe','Ae','Ue',);
 		$user				= array(' ','ö','ä','ü','Ö','Ä','Ü',);
 	
-		$info['headline']	= str_replace($system, $user, substr($album_name,5));
 		$info['year']		= substr($album_name,0,4);
+		$info['headline']	= ($to == "text") ? str_replace($system, $user, substr($album_name,5)) : "_".str_replace($user,$system, substr($album_name,5)); //Hack: Add "_", else wrong name format
 	
 		return $info;
+	}
+	
+	public function CreateAlbum($album_name)
+	{
+		if(!file_exists(PATH_UPLOAD."picture/".$album_name))
+		{
+			if(mkdir(PATH_UPLOAD."picture/".$album_name) == false)
+			{
+				throw new impeesaException("Can't create picture album! Permission denied?");
+			}
+			return true;
+		}
+		return false;
 	}
 	
 }

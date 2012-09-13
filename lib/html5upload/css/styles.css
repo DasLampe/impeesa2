@@ -13,7 +13,7 @@
     width: 80%;
     background-size: 50px 50px;
 background-size: 50px 50px;
-background-color: #FFD000;
+background-color: #6a121e;
 background-image: -webkit-linear-gradient(-45deg, rgba(255, 255, 255, .2) 25%, transparent 25%,
                   transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%,
                   transparent 75%, transparent);
@@ -36,6 +36,7 @@ background-image: linear-gradient(-45deg, rgba(255, 255, 255, .2) 25%, transpare
 	font-size: 11px;
     text-align: center;
     display: block;
+   	color: #ffffff;
 }
 
 #dropbox .message i{

@@ -293,4 +293,12 @@ class impeesaUser {
 		}
 		return false;
 	}
+	
+	public function CanEdit()
+	{
+		if($this->IsLogin() == true)
+		{
+			return true;
+		}
+	}
 }

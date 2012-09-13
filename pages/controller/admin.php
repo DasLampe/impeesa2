@@ -35,6 +35,9 @@ class AdminController extends AbstractController {
 			case 'news':
 				$site	= "news";
 				break;
+			case 'picture':
+				$site	= 'picture';
+				break;
 			default:
 				return $this->view->ConfigView($_POST);
 				break;

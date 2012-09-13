@@ -26,8 +26,14 @@ class PictureController extends AbstractController
 		
 		$this->view	= new PictureView();
 		
-		switch($this->param[1])
+		switch($this->param[2])
 		{
+			case "newAlbum":
+				return $this->view->NewAlbumView($_POST);
+				break;
+			case "uploadFile":
+				return json_encode($this->view->UploadPictureView($_FILES['pic'], $this->param[3]));
+				break;
 			case "myPicture":
 				if(isset($this->param[2]) && $this->param[2] == "delete")
 				{
