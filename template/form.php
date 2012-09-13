@@ -4,7 +4,7 @@
 // | Encoding:  UTF-8 |
 // +----------------------------------------------------------------------+
 ?>
-<form class="ym-form" action="{action}" method="{method}">
+<form class="ym-{form_class}" action="{action}" method="{method}">
 	{error_msg}
 	{fields}
 </form>

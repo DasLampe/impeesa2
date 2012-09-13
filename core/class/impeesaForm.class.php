@@ -13,8 +13,9 @@ class impeesaForm {
 		$this->error_msg	= array();
 	}
 	
-	public function GetForm(array $fields, $action, $method="post")
+	public function GetForm(array $fields, $action, $method="post", $form_class="form")
 	{
+		$this->tpl->vars("form_class",	$form_class);
 		$this->tpl->vars("fields",		$this->GetFormFields($fields));
 		$this->tpl->vars("action",		$action);
 		$this->tpl->vars("method",		$method);
@@ -137,6 +138,7 @@ class impeesaForm {
 				break;
 			case 'text':
 			case 'email':
+			case 'year':
 				return $this->tpl->load("_form_text");
 				break;
 			case 'static':
