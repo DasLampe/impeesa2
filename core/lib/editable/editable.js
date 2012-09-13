@@ -34,10 +34,15 @@ $(document).ready(function() {
 		file = this.files[0];
 		// XMLHttpRequest öffnen
 		request.open('POST', window.location, true);
+		request.setRequestHeader("X-Requested-With", "XMLHttpRequest");
 
 		request.addEventListener('load', function(evt) {
-			evt12 = JSON.parse(request.responseText);
-			$('#content[contenteditable="true"]').prepend('<img src="'+evt12.picture_link+'" class="img-dec float-right" />');
+			response = JSON.parse(request.responseText);
+			if(response.status == "success")
+			{
+				$('#content[contenteditable="true"]').prepend('<img src="'+response.picture_link+'" class="img-dec float-right" />');
+			}
+			show_msg(response.msg, response.status);
 		}, false);
 
 		// FormData Objekt erstellen
@@ -46,6 +51,13 @@ $(document).ready(function() {
 
 		// Datei hochladen
 		request.send(data);
+		request.onreadystatechange = function() {
+			if(request.readyState == '2')
+			{
+				response	= JSON.parse(request.responseText);
+				show_msg("Bild wird hochgeladen. Einen Augenblick", "info");
+			}
+		};
 		$(this).val('');
 	});
 	
