@@ -57,9 +57,20 @@ class PictureView extends AbstractView
 		$this->tpl->addCss("jquery.lightbox.css",	LINK_LIB."jquery-lightbox/css/");
 		$this->tpl->addJs("picture.js",				LINK_LIB."jquery-lightbox/js/");
 		
+		if($user->CanDelete() == true)
+		{
+			$this->tpl->addJs("picture_acp.js",		LINK_MAIN."pages/template/picture/");
+			$this->tpl->addCss("picture_acp.css",	LINK_MAIN."pages/template/picture/");
+			$this->tpl->vars("userCanDelete",		"true");
+		}
+		
 		$gallery	= "";
 		foreach($this->model->GetAlbumPicture($album) as $picture)
 		{
+			if($user->CanDelete() == true)
+			{ //Add link to delete picture
+				$this->tpl->vars("delete_link",	LINK_ACP."picture/deleteFile/".$album."/".$picture);
+			}
 			$this->tpl->vars("link",		LINK_LIB."thumbnail/thumbnail.php?dir=picture/".$album."&picture=".$picture."&width=800&height=426");
 			$this->tpl->vars("thumbnail",	LINK_LIB."thumbnail/thumbnail.php?dir=picture/".$album."&picture=".$picture);
 			$gallery	.= $this->tpl->load("_gallery_block", PATH_PAGES_TPL."picture/");
@@ -68,7 +79,7 @@ class PictureView extends AbstractView
 		$this->tpl->vars("picture_gallery",		$gallery);
 		$content	= $this->tpl->load("_gallery", PATH_PAGES_TPL."picture/");
 		
-		if($user->canEdit() == true)
+		if($user->CanAdd() == true)
 		{ //if user can upload picture, show dropbox zone
 			$this->tpl->addJs("jquery.filedrop.js",	LINK_LIB."html5upload/js/");
 			$this->tpl->addJs("script.js",			LINK_LIB."html5upload/js/");
@@ -84,19 +95,13 @@ class PictureView extends AbstractView
 	public function UploadPictureView(array $file, $album)
 	{
 		include_once(PATH_MODEL."picture.php");
-		include_once(PATH_CORE_CLASS."impeesaUser.class.php");
 		$this->model	= new PictureModel();
-		$user			= new impeesaUser($_SESSION);
-		
-		if($user->CanEdit() == true)
+
+		if($this->model->UploadPicture($file, PATH_UPLOAD."picture/".$album))
 		{
-			if($this->model->UploadPicture($file, PATH_UPLOAD."picture/".$album))
-			{
-				return array('status' => 'File was uploaded successfuly!');
-			}
-			return array('status'	=> "Something went wrong!");
+			return array('status' => 'File was uploaded successfuly!');
 		}
-		return array('status' => 'Something went wrong!');
+		return array('status'	=> "Something went wrong!");
 	}
 	
 	public function NewAlbumView($data)
@@ -128,5 +133,16 @@ class PictureView extends AbstractView
 			}
 			return impeesaLayer::SetInfoMsg($_SESSION, "Album konnte nicht erstellt werden! Evtl. existiert es bereits.", CURRENT_PAGE, "error");
 		}
+	}
+	
+	public function DeletePictureView($album_name, $filename)
+	{
+		include_once(PATH_MODEL."picture.php");
+		$this->model	= new PictureModel();
+		if($this->model->DeletePicture(PATH_UPLOAD."picture/".$album_name, $filename) == true)
+		{
+			return impeesaLayer::SetInfoMsg($_SESSION, "Bild erfolgreich gelöscht!", LINK_MAIN."picture/".$album_name);
+		}
+		return impeesaLayer::SetInfoMsg($_SESSION, "Bild konnte nicht gelöscht werden!", LINK_MAIN."picture/".$album_name, "error");
 	}
 }

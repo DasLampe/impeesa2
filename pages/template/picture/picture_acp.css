@@ -1,0 +1,46 @@
+@CHARSET "UTF-8";
+.picture {
+	height: 200px;
+	position: relative;
+	float: left;
+	margin: 20px;
+}
+
+.picture a, .picture img {
+	position:relative;
+	z-index:2;
+}
+
+.picture .options {
+	-webkit-border-top-left-radius: 15px;
+	-moz-border-top-left-radius: 15px;
+	border-top-left-radius: 15px;
+	-webkit-border-top-right-radius: 15px;
+	-moz-border-top-right-radius: 15px;
+	border-top-right-radius: 15px;
+	display: none;
+	text-align: right;
+	-khtml-opacity: 0.8
+	-moz-opacity: 0.8
+	-webkit-opacity: 0.8
+	filter: alpha(opacity=80)
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+	opacity: 0.8;
+}
+
+.picture:hover .options {
+	display:block;
+	position:absolute;
+	z-index:101;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	background-color:#000000;
+	color: #FFFFFF;
+}
+
+.picture .ym-delete:hover, .picture .ym-delete {
+	color: #ff0000;
+	background: transparent;
+}
+

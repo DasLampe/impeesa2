@@ -4,8 +4,12 @@
 // | Encoding:  UTF-8 |
 // +----------------------------------------------------------------------+
 ?>
-<div style="display: block; float: left;  text-align: center; padding: 20px; margin: 10px; ">
-	<div style="height: 250px; margin-bottom: 5px;">
-		<a href="{link}" rel="lightbox"><img src="{thumbnail}" class="img-dec" /></a>
-	</div>
+<div class="picture">
+	<a href="{link}" rel="lightbox"><img src="{thumbnail}" class="img-dec" /></a>
+
+	{if} {userCanDelete} == true {/if}
+		<div class="options">
+			<a href="{delete_link}" class="ym-delete">Löschen</a>
+		</div>
+	{/endif}
 </div>

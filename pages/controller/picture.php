@@ -23,37 +23,33 @@ class PictureController extends AbstractController
 	public function AdminController()
 	{
 		include_once(PATH_VIEW."picture.php");
+		include_once(PATH_CORE_CLASS."impeesaUser.class.php");
 		
 		$this->view	= new PictureView();
+		$user			= new impeesaUser($_SESSION);
 		
 		switch($this->param[2])
 		{
 			case "newAlbum":
-				return $this->view->NewAlbumView($_POST);
+				if($user->CanAdd() == true)
+				{
+					return $this->view->NewAlbumView($_POST);
+				}
+				throw new impeesaPermissionException("Can't create album!");
 				break;
 			case "uploadFile":
-				return json_encode($this->view->UploadPictureView($_FILES['pic'], $this->param[3]));
+				if($user->CanAdd() == true)
+				{
+					return json_encode($this->view->UploadPictureView($_FILES['pic'], $this->param[3]));
+				}
+				throw new impeesaPermissionException("Can't upload picture!");
 				break;
-			case "myPicture":
-				if(isset($this->param[2]) && $this->param[2] == "delete")
+			case "deleteFile":
+				if($user->CanDelete() == true)
 				{
-					return $this->view->DeletePictureView($_SESSION['user_id'], $this->param[3]);
+					return $this->view->DeletePictureView($this->param[3], $this->param[4]);
 				}
-				if(!isset($_FILES['pic']))
-				{
-					return $this->view->MyPictureView();
-				}
-				else
-				{
-					return json_encode($this->view->UploadPictureView($_FILES['pic']));
-				}
-				break;
-			case "allPicture":
-				if(!isset($this->param[2]))
-				{
-					return $this->view->AllPictureMainView();
-				}
-				return $this->view->AllPictureUserView($this->param[2]);
+				throw new impeesaPermissionException("Can't delete picture!");
 				break;
 		}
 	}

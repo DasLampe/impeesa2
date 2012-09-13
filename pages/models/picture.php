@@ -67,9 +67,9 @@ class PictureModel extends AbstractModel
 
 	public function DeletePicture($dir, $filename)
 	{
-		if(file_exists(PATH_UPLOAD.$dir.'/'.$filename))
+		if(file_exists($dir.'/'.$filename))
 		{
-			if(unlink(PATH_UPLOAD.$dir.'/'.$filename) == false)
+			if(unlink($dir.'/'.$filename) == false)
 			{
 				return false;
 			}
