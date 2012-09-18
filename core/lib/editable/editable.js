@@ -71,15 +71,21 @@ $(document).ready(function() {
 		}
 		
 		data	= $.param(data);
+		var url = window.location.href;
+		var link_main	= "{LINK_MAIN}";
+		url	= url.substr(link_main.lastIndexOf("/"));
+		if(url.search("/admin/") >= 0)
+		{
+			url	= url.slice(6);
+		}
 		
 		$.ajax({
-			url: window.location,
+			url: "{LINK_MAIN}admin"+url,
 			type: "POST",
 			typeData: "json",
 			data: data+"&submit=True",
 			success: function(data) {
 				show_msg(data.msg, data.status);
-				$('#save').remove();
 			}
 		});
 	});

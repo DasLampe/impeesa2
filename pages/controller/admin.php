@@ -15,9 +15,13 @@ class AdminController extends AbstractController {
 		/**
 		 * User isn't login now
 		 */
-		if($user->isLogin() === false || !isset($this->param[1]))
+		if($user->isLogin() === false)
 		{
 			return $this->view->LoginView($_POST, $user);
+		}
+		elseif(!isset($this->param[1]))
+		{
+			return $this->view->ConfigView($_POST);
 		}		
 		elseif($this->param[1] == "login")
 		{ //Already login, but go to login page
@@ -37,9 +41,6 @@ class AdminController extends AbstractController {
 				break;
 			case 'picture':
 				$site	= 'picture';
-				break;
-			default:
-				return $this->view->ConfigView($_POST);
 				break;
 		}
 		
@@ -65,6 +66,12 @@ class AdminController extends AbstractController {
 			{
 				throw new impeesaException("No AdminController method");
 			}
+		}
+		else
+		{
+			include_once(PATH_CONTROLLER."content.php");
+			$page_class	= new ContentController($this->param);
+			return $page_class->AdminController();
 		}
 	}
 }

@@ -4,4 +4,4 @@
 // | Encoding:  UTF-8 |
 // +----------------------------------------------------------------------+
 ?>
-<a href="#" id="save" class="ym-save ">Veröffentlichen</a>
+<a href="#" id="save" class="ym-save ">Speichern</a>
