@@ -27,13 +27,7 @@ class pageController
 			$sidebar				= new SidebarController($this->param);
 			$tpl->vars("sidebar",	$sidebar->factoryController());
 
-			//Content
-			if(file_exists(PATH_CONTENT.$this->param[0].".php") && !file_exists(PATH_CONTROLLER.$this->param[0].".php"))
-			{
-				include_once(PATH_CONTROLLER."content.php");
-				$page_controller	= new ContentController($this->param);
-			}
-			elseif(file_exists(PATH_CONTROLLER.$this->param[0].".php"))
+			if(file_exists(PATH_CONTROLLER.$this->param[0].".php"))
 			{
 				include_once(PATH_CONTROLLER.$this->param[0].".php");
 				$page_controller	= ucfirst($this->param[0]).'Controller';
@@ -41,10 +35,13 @@ class pageController
 			}
 			else
 			{
-				throw new impeesaException("Error 404");
+				include_once(PATH_CONTROLLER."content.php");
+				$page_controller	= new ContentController($this->param);
 			}
+
 			$page_content	= $page_controller->factoryController();
 			$this->tpl->vars("page_content", $page_content);
+			
 		}
 		catch(impeesaException $e)
 		{
@@ -54,7 +51,7 @@ class pageController
 		
 		/**
 		 * Infobar
-		 * @info: placed here, because you can set some buttons in the skript 
+		 * @info: placed here, because you can set some buttons in the script 
 		 */
 		include_once(PATH_CONTROLLER."infobar.php");
 		$infobar				= new InfobarController($this->param);
