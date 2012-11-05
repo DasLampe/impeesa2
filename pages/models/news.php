@@ -77,4 +77,21 @@ class NewsModel extends AbstractModel
 		$sth->execute();
 		return true;
 	}
+	
+	public function DeleteNewsPost($id)
+	{
+		try
+		{
+			$sth		= $this->db->prepare("DELETE FROM ".MYSQL_PREFIX."news WHERE id = :news_id");
+			$sth->bindParam(":news_id",	$id);
+			if($sth->execute())
+				return true;
+			return false;
+		}
+		catch(PDOException $e)
+		{
+			new impeesaExecption("Can't delete news ID: ".$id.". Database Error");
+			return false;
+		}
+	}
 }

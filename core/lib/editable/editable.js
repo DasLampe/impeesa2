@@ -8,6 +8,11 @@ $(document).ready(function() {
 			$(this).empty();
 		}
 	});*/
+
+	if(jQuery().fresheditor)
+	{
+		$('*[contenteditable="true"]').css("clear", "both").fresheditor();
+	}
 	
 	$('#content[contenteditable="true"]').focusout(function() {
 		if(!$(this).text().length)
@@ -86,7 +91,35 @@ $(document).ready(function() {
 			data: data+"&submit=True",
 			success: function(data) {
 				show_msg(data.msg, data.status);
+			},
+			error: function(data) {
+				show_msg("Fehler. LEider ist etwas schief gelaufen", "error");
 			}
 		});
 	});
+	
+	/**
+	 * Editor
+	 *
+	//Add Button
+	$('#infobar > .ym-wrapper').append('<div class="infobar-button"></div>');
+	var $editorbar	= $('#infobar > .ym-wrapper > .infobar-button').last();
+	$($editorbar).append('<a href="#h1">H1</span>');
+	
+	//Editor functions
+	$('a[href="#h1"]').click(function() {
+		text			= $('#content[contenteditable="true"]');
+		var selection	= text.selection();
+		htmltext		= text.html();
+		console.log(selection.start+","+selection.end);
+		/*var before		= text.html().substr(0,selection.start-1);
+		console.log(before);
+		var after		= text.html().substr(selection.end);
+		console.log(after);
+		var replace		= htmltext.substring(selection.start, selection.end);
+		console.log(replace);
+		
+		htmltext	= before+'<h1>'+replace+'</h1>'+after;
+		console.log(text);
+	});*/
 });

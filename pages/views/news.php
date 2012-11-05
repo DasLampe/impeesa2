@@ -31,6 +31,7 @@ class NewsView extends AbstractView
 		$layer			= impeesaLayer::getInstance();
 		
 		$layer->AddButton('<a href="'.LINK_MAIN.'admin/news/add" class="ym-add">Neuigkeiten hinzufügen</a>');
+		$this->tpl->addJs("newsAcp.js",		LINK_MAIN."pages/template/news/");
 		
 		$posts="";
 		foreach($this->model->GetNewsPosts() as $news_post)
@@ -58,7 +59,7 @@ class NewsView extends AbstractView
 		
 		
 		if(!isset($data['submit']))
-		{			
+		{
 			$this->tpl->addJs("editable.js",		LINK_CORE_LIB."editable/");
 			
 			$this->tpl->vars("headline",		"Überschrift");
@@ -102,6 +103,23 @@ class NewsView extends AbstractView
 		{
 			$this->model->UpdateNewsPost($id, $data['headline'], $data['content'], $data['publish']);
 			return impeesaLayer::SetInfoMsg($_SESSION, "Erfolgreich gespeichert!", CURRENT_PAGE, "success");
+		}
+	}
+	
+	public function RemoveView($id)
+	{
+		include_once(PATH_MODEL."news.php");
+		
+		$this->model	= new NewsModel();
+		$layer			= impeesaLayer::getInstance();
+		
+		if($this->model->DeleteNewsPost($id) == true)
+		{
+			return impeesaLayer::SetInfoMsg($_SESSION, "Neuigkeit erfolgreich gelöscht!", LINK_ACP."news", "success");
+		}
+		else
+		{
+			return impeesaLayer::SetInfoMsg($_SESSION, "Neuigkeit konnte nicht gelöscht werden.", LINK_ACP."news", "error");
 		}
 	}
 	

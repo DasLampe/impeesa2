@@ -31,6 +31,9 @@ class NewsController extends AbstractController
 				}
 				return $this->view->AddView($_POST);
 				break;
+			case 'remove':
+				return $this->view->RemoveView($this->param[3]);
+				break;
 			case 'edit':
 				if(!isset($_POST['submit']))
 				{
