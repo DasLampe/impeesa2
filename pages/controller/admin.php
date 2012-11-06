@@ -25,7 +25,7 @@ class AdminController extends AbstractController {
 		}		
 		elseif($this->param[1] == "login")
 		{ //Already login, but go to login page
-			header("Location: ".LINK_MAIN."admin/home/");
+			header("Location: ".LINK_MAIN."admin/config/");
 		}
 		
 		switch(strtolower($this->param[1]))
@@ -42,7 +42,12 @@ class AdminController extends AbstractController {
 			case 'picture':
 				$site	= 'picture';
 				break;
-			default:
+			case 'content':
+				$site	= 'content';
+				break;
+			case '':
+			case 'home':
+			case 'config':
 				return $this->view->ConfigView($_POST);
 				break;
 		}

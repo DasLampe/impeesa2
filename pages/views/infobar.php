@@ -14,8 +14,9 @@ class InfobarView extends AbstractView {
 		$return	= array();
 		if($user->IsLogin() == true)
 		{
-			$layer->AddButton('<a href="'.LINK_MAIN.'/userManagement/profile" class="ym-edit">Profil</a>');
-			$layer->AddButton('<a href="'.LINK_ACP.'/logout" class="ym-next">Abmelden</a>');
+			$layer->AddButton('<a href="'.LINK_ACP.'content/addPage" class="ym-add">Seite erstellen</a>');
+			$layer->AddButton('<a href="'.LINK_MAIN.'userManagement/profile" class="ym-edit">Profil</a>');
+			$layer->AddButton('<a href="'.LINK_ACP.'logout" class="ym-next">Abmelden</a>');
 		}
 		
 		

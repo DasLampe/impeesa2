@@ -20,7 +20,7 @@ class ContentController extends AbstractController
 		}
 		else
 		{
-			throw new impeesaException("Contentfile doen't exists!");
+			throw new impeesaException("Contentfile don't exists!", 404);
 		}
 	}
 
@@ -29,9 +29,27 @@ class ContentController extends AbstractController
 		include_once(PATH_VIEW."content.php");
 		$this->view	= new ContentView();
 		
-		if(isset($_POST['submit']))
+		if((!isset($this->param[1]) || $this->param[1] != "content") && isset($_POST['submit']))
 		{
 			return $this->view->SaveDatabaseView($_POST, $this->param[1]);
 		}
+		elseif($this->param[1] == "content")
+		{
+			switch(@$this->param[2])
+			{
+				case 'addPage': 
+					return $this->view->NewPageView($_POST);
+					break;
+				case 'edit':
+					return $this->view->EditPageView($this->param[3], $_POST);
+					break;
+				case 'delete':
+					return $this->view->DeleteView($this->param[3]);
+					break;
+				default:
+					return $this->view->MenuEditView($_POST);
+					break;
+			}
+		} 
 	}
 }

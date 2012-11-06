@@ -27,21 +27,28 @@ class pageController
 			$sidebar				= new SidebarController($this->param);
 			$tpl->vars("sidebar",	$sidebar->factoryController());
 
-			if(file_exists(PATH_CONTROLLER.$this->param[0].".php"))
+			try
 			{
-				include_once(PATH_CONTROLLER.$this->param[0].".php");
-				$page_controller	= ucfirst($this->param[0]).'Controller';
-				$page_controller	= new $page_controller($this->param);
-			}
-			else
-			{
-				include_once(PATH_CONTROLLER."content.php");
-				$page_controller	= new ContentController($this->param);
-			}
+				if(file_exists(PATH_CONTROLLER.$this->param[0].".php"))
+				{
+					include_once(PATH_CONTROLLER.$this->param[0].".php");
+					$page_controller	= ucfirst($this->param[0]).'Controller';
+					$page_controller	= new $page_controller($this->param);
+				}
+				else
+				{
+					include_once(PATH_CONTROLLER."content.php");
+					$page_controller	= new ContentController($this->param);
+				}
 
-			$page_content	= $page_controller->factoryController();
-			$this->tpl->vars("page_content", $page_content);
-			
+				$page_content	= $page_controller->factoryController();
+				$this->tpl->vars("page_content", $page_content);
+			}
+			catch(impeesa404Exception $e)
+			{
+				$page_content	= $e->getCustomMessage();
+				$this->tpl->vars("page_content", $page_content);
+			}
 		}
 		catch(impeesaException $e)
 		{

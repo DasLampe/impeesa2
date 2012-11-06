@@ -16,12 +16,12 @@ class ContentModel extends AbstractModel
 		$row	= $sth->fetch();
 		if(empty($row))
 		{
-			throw new impeesaException("Error 404. Sitename isn't in database");
+			throw new impeesaException("Sitename isn't in database", 404);
 		}
 		return $row;
 	}
 	
-	private function ExistsPage($sitename)
+	public function ExistsPage($sitename)
 	{
 		$result	= $this->db->prepare("SELECT COUNT(id) as count
 									FROM ".MYSQL_PREFIX."content
@@ -42,22 +42,11 @@ class ContentModel extends AbstractModel
 		include_once(PATH_CORE_CLASS."impeesaUser.class.php");
 		$user			= new impeesaUser($_SESSION);
 		
-		if($this->ExistsPage($sitename) == false)
+		if($user->CanEdit() == false)
 		{
-			if($user->CanAdd() == false)
-			{
-				throw new impeesaException("Permission denied!");
-			}
-			return $this->AddPage($content, $sitename);
+			throw new impeesaException("Permission denied!", 401);
 		}
-		else
-		{
-			if($user->CanEdit() == false)
-			{
-				throw new impeesaException("Permission denied!");
-			}
-			return $this->EditPage($content, $sitename);
-		}
+		return $this->EditPage($content, $sitename);
 	}
 	
 	private function EditPage($content, $sitename)
@@ -69,8 +58,7 @@ class ContentModel extends AbstractModel
 										WHERE name = :sitename");
 			$sth->bindParam(":content",		$content);
 			$sth->bindParam(":sitename",	$sitename);
-			$sth->execute();
-			return true;
+			return $sth->execute();
 		}
 		catch(PDOException $e)
 		{
@@ -78,23 +66,116 @@ class ContentModel extends AbstractModel
 		}
 	}
 	
-	private function AddPage($content, $sitename)
+	public function CreatePage($sitename, $title, $menu_title, $in_nav)
 	{
 		try
 		{
+			($in_nav) ? 1 : 0;
 			$sth	= $this->db->prepare("INSERT INTO ".MYSQL_PREFIX."content
-										(name, title, content)
+										(name, title, menu_title, in_nav, content)
 										VALUES
-										(:sitename, :title, :content)");
-			$sth->bindParam(":sitename",	$sitename);
-			$sth->bindParam(":title",		ucfirst($sitename));
-			$sth->bindParam(":content",		$content);
-			$sth->execute();
-			return true;
+										(:sitename, :title, :menu_title, :in_nav, 'Bitte Text einfügen!')");
+			$sth->bindParam(":sitename",	$this->SetValidPageName($sitename));
+			$sth->bindParam(":title",		$title);
+			$sth->bindParam(":menu_title",	$menu_title);
+			$sth->bindParam(":in_nav",		$in_nav);
+			return $sth->execute();
 		}
 		catch(PDOException $e)
 		{
 			throw new impeesaException($e->getMessage());
 		}
+	}
+	
+	public function GetPageInfo($sitename)
+	{
+		$sth		= $this->db->prepare("SELECT id, title, name, menu_title, in_nav
+										FROM ".MYSQL_PREFIX."content
+										WHERE name = :sitename");
+		$sth->bindParam(":sitename",	$sitename);
+		$sth->execute();
+		return $sth->fetch();
+	}
+	
+	public function EditPageInfo($old_sitename, $sitename, $title, $menu_title, $in_nav)
+	{
+		try
+		{
+			$sth	= $this->db->prepare("UPDATE ".MYSQL_PREFIX."content SET
+										name		= :sitename,
+										title 		= :title,
+										menu_title 	= :menu_title,
+										in_nav		= :in_nav
+										WHERE name	= :old_sitename");
+			$sth->bindParam(":old_sitename",	$old_sitename);
+			$sth->bindParam(":sitename",		$this->SetValidPageName($sitename));
+			$sth->bindParam(":title",			$title);
+			$sth->bindParam(":menu_title",		$menu_title);
+			$sth->bindParam(":in_nav",			$in_nav);
+			return $sth->execute();
+		}
+		catch(PDOException $e)
+		{
+			throw new impeesaException($e->getMessage());
+		}
+	}
+	
+	public function DeletePage($sitename)
+	{
+		try
+		{
+			$sth	= $this->db->prepare("DELETE FROM ".MYSQL_PREFIX."content WHERE name = :sitename");
+			$sth->bindParam(":sitename",	$sitename);
+			return $sth->execute();
+		}
+		catch(PDOException $e)
+		{
+			throw new impeesaException($e->getMessage());
+		}
+	}
+
+	public function GetAllMenuEntries($parent_id = 0, $in_nav = True)
+	{
+		$in_nav = ($in_nav == False) ? 0 : 1;
+		
+		$sth		= $this->db->prepare("SELECT id, title, name, menu_title, in_nav
+										FROM ".MYSQL_PREFIX."content
+										WHERE (in_nav = :in_nav OR in_nav = 1)
+											AND parent = :parent_id
+										ORDER BY nav_order");
+		$sth->bindParam(":parent_id",	$parent_id);
+		$sth->bindParam(":in_nav",		$in_nav);
+		$sth->execute();
+		
+		return $sth->fetchAll();
+
+	}
+	
+	public function SetValidPageName($page_name)
+	{
+		return preg_replace("/\W/i", "", $page_name);
+	}
+	
+	public function SaveMenuOrder($data)
+	{
+		$this->db->beginTransaction();
+		$sth	= $this->db->prepare("UPDATE ".MYSQL_PREFIX."content SET
+									nav_order = :nav_order,
+									parent = :nav_parent
+									WHERE id = :entry_id");
+		foreach($data["menu"] as $key=>$value)
+		{
+			foreach($value as $nav_order=>$menu_entry)
+			{
+				if($key != $menu_entry)
+				{
+					$sth->bindParam(":nav_order",	$nav_order);
+					$sth->bindParam(":nav_parent",	$key);
+					$sth->bindParam(":entry_id",	$menu_entry);
+					$sth->execute();
+				}
+			}
+		}
+		return $this->db->commit();
 	}
 }

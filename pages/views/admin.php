@@ -89,6 +89,12 @@ class AdminView extends AbstractView {
 	
 	public function SidebarView()
 	{
+		include_once(PATH_CORE_CLASS."impeesaUser.class.php");
+		$user		= new impeesaUser($_SESSION);
+		if($user->isLogin() == "")
+		{
+			return "";
+		}
 		$menu_array	= array(
 				array(
 					"page_url"		=> LINK_ACP."userManagement/allUser",
@@ -97,6 +103,10 @@ class AdminView extends AbstractView {
 				array(
 					"page_url"		=> LINK_ACP."news",
 					"page_title"	=> "Neuigkeiten verwalten",
+				),
+				array(
+					"page_url"		=> LINK_ACP."content",
+					"page_title"	=> "Seiten verwalten",
 				),
 		);
 		

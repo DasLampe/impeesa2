@@ -14,7 +14,22 @@ class impeesaException extends Exception
 		$exception_number	= $this->saveException();
 		$tpl				= impeesaTemplate::getInstance();
 		$tpl->vars("exception_number",		$exception_number);
-		return $tpl->load("error_exception");
+		
+		//Use HTTP Statuscode
+		switch($this->getCode())
+		{
+			case '404':
+				header('HTTP/1.0 404 not found');
+  				header("Status: 404 not found");
+  				return $tpl->load("404_exception");
+  				break;
+  			case '401':
+  				return $tpl->load("permission_exception");
+  				break;
+  			default:
+				return $tpl->load("error_exception");
+				break;
+		}
 	}
 	
 	protected function saveException()
@@ -38,15 +53,4 @@ class impeesaException extends Exception
 							));
 		return $exception_id;
 	}
-}
-
-class impeesaPermissionException extends impeesaException
-{
-	public function getCustomMessage()
-	{
-		$exception_number	= $this->saveException();
-		$tpl				= impeesaTemplate::getInstance();
-		$tpl->vars("exception_number",		$exception_number);
-		return $tpl->load("permission_exception");
-	}	
 }

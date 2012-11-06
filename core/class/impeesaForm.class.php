@@ -136,6 +136,10 @@ class impeesaForm {
 				
 				return $this->tpl->load("_form_option");
 				break;
+			case 'checkbox':
+				$this->tpl->vars("checked",		$this->IsCheckedField($field[3]));
+				return $this->tpl->load("_form_checkbox");
+				break;
 			case 'text':
 			case 'email':
 			case 'year':
@@ -186,6 +190,15 @@ class impeesaForm {
 		{
 			return 'selected="selected"';
 		}	
+		return '';
+	}
+	
+	private function IsCheckedField($checked)
+	{
+		if($checked == true)
+		{
+			return 'checked="checked"';
+		}
 		return '';
 	}
 }
