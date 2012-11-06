@@ -10,6 +10,7 @@ class SidebarController extends AbstractController {
 		$this->view			= new SidebarView();
 		
 		$return_content		= $this->view->MainView();
+		$return_content		.= $this->view->SubmenuView($this->param[0]);
 		
 		/*
 		 * If Page has sidebarview.

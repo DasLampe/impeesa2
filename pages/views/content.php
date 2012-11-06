@@ -159,7 +159,7 @@ class ContentView extends AbstractView {
 		}
 		elseif($this->model->EditPageInfo($page['name'], $data['name'], $data['title'], $data['menu_title'], $in_nav))
 		{
-			return impeesaLayer::SetInfoMsg($_SESSION, "Seite wurde erfolgreich geändert.", CURRENT_PAGE, "success");
+			return impeesaLayer::SetInfoMsg($_SESSION, "Seite wurde erfolgreich geändert.", LINK_MAIN.$this->model->SetValidPageName($data['name']), "success");
 		}
 		return impeesaLayer::SetInfoMsg($_SESSION, "Es ist ein Fehler aufgetreten. Seite wurde nicht gespeichert!", CURRENT_PAGE, "error");
 		

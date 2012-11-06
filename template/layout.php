@@ -43,9 +43,9 @@
 		<div class="ym-wrapper">
 			<a id="navigation" name="navigation"></a>
 			<div class="ym-hlist">
-				<?php
-					include_once(PATH_CONTROLLER."menu.php");
-				?>
+				<ul>
+					{menu_items}
+				</ul>
 			</div>
 		</div>
 	</nav>

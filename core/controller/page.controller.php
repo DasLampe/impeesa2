@@ -79,6 +79,18 @@ class pageController
 			$this->tpl->vars("info_msg",		$this->tpl->load("_infoMsg"));
 		}
 		
+		//Generate Menu
+		include_once(PATH_CORE_CLASS."impeesaMenu.class.php");
+		$menu		= new impeesaMenu();
+		$menu_item	= "";
+		foreach($menu->GetAllMenuEntries() as $menu_entry)
+		{
+			$this->tpl->vars("page_url",	LINK_MAIN.$menu_entry['name']);
+			$this->tpl->vars("page_title",	$menu_entry['menu_title']);
+			$menu_item .= $this->tpl->load("_nav_li");
+		}
+		$this->tpl->vars("menu_items",		$menu_item);
+		
 		
 		/**
 		 * Handle JSON
