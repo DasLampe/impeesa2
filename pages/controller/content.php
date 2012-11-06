@@ -10,13 +10,13 @@ class ContentController extends AbstractController
 		include_once(PATH_VIEW."content.php");
 		$this->view	= new ContentView();
 		
-		if(file_exists(PATH_CONTENT.$this->param[0].".php"))
+		if(($view = $this->view->DatabaseView($this->param[0])) != false)
+		{
+			return $view;
+		}
+		elseif(file_exists(PATH_CONTENT.$this->param[0].".php"))
 		{
 			return $this->view->StaticView($this->param[0]);
-		}
-		elseif(($view = $this->view->DatabaseView($this->param[0])) != false)
-		{
-			return $view;	
 		}
 		else
 		{

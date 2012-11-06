@@ -48,6 +48,10 @@ class AdminController extends AbstractController {
 			case '':
 			case 'home':
 			case 'config':
+				if(isset($_POST['submit']))
+				{ //Hack. If sitename of dynamic site is == home
+					continue;
+				}
 				return $this->view->ConfigView($_POST);
 				break;
 		}
