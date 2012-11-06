@@ -11,7 +11,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-	<title>»‹ Impeesa2</title>
+	<title><?= impeesaConfig::get('unitname'); ?></title>
 	<link href="<?= LINK_TPL; ?>css/style.css" rel="stylesheet" type="text/css" />
 	<script type="text/javascript" src="<?= LINK_MAIN; ?>core/lib/js/jquery.min.js"></script>
 	<script type="text/javascript" src="<?= LINK_MAIN; ?>core/lib/js/webtoolkit.base64.js"></script>
