@@ -22,6 +22,12 @@ class SidebarController extends AbstractController {
 			$view		= new AdminView();
 			$return_content .= $view->SidebarView();
 		}
+		if($this->param[0] == "calender")
+		{
+			include_once(PATH_VIEW."calender.php");
+			$view		= new CalenderView();
+			$return_content	.= $view->SidebarView();
+		}
 		
 		return $return_content;
 	}
