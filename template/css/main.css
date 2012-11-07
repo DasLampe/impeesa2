@@ -8,6 +8,7 @@ body
 /*********************+++Header+++********************************/
 header
 {
+	background:#b8bcbf; /* Fallback for IE */
 	background: -webkit-gradient(linear, 0 0, 0 bottom, from(#b8bcbf), to(#cfd0d4));
 	background: -webkit-linear-gradient(#b8bcbf, #cfd0d4);
 	background: -moz-linear-gradient(#b8bcbf, #cfd0d4);
@@ -26,6 +27,7 @@ header h1
 /*********************+++Navigation+++****************************/
 nav, .ym-hlist
 {
+	background: #194d89; /* Fallback for IE */
 	background: -webkit-gradient(linear, 0 0, 0 bottom, from(#194d89), to(#0c1e36));
 	background: -webkit-linear-gradient(#194d89, #0c1e36);
 	background: -moz-linear-gradient(#194d89, #0c1e36);
@@ -79,7 +81,7 @@ footer {
 
 /*********************+++Sidebar+++*********************************/
 .sidebar {
-	background: #FFFFFF;
+	background: #FFFFFF; /* Fallback for IE */
 	background: -webkit-linear-gradient(#cfd0d4, #FFFFFF);
 	background: -moz-linear-gradient(#cfd0d4, #FFFFFF);
 	background: -ms-linear-gradient(#cfd0d4, #FFFFFF);
@@ -91,7 +93,7 @@ footer {
 	display: block;
 	width: 100%;
 	height: 1em;
-	background: #7a1620;
+	background: #7a1620; /* Fallback for IE */
 	background: -webkit-linear-gradient(#7a1620, #6a121e);
 	background: -moz-linear-gradient(#7a1620, #6a121e);
 	background: -ms-linear-gradient(#7a1620, #6a121e);
