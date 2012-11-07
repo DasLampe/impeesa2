@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS `impeesa2_config` (
 INSERT INTO `impeesa2_config` (`config_key`, `config_value`) VALUES
 ('adminEmail', 'daslampe@lano-crew.org'),
 ('unitname', 'Impeesa2 - CMS for Scouts'),
-('version', '2.0.1'),
+('version', '2.0.2'),
 ('scoutNetId', '7');
 
 ALTER TABLE `impeesa2_config` ADD `description` TEXT NOT NULL AFTER `config_value`;
@@ -40,4 +40,4 @@ CREATE TABLE IF NOT EXISTS `impeesa2_content` (
   `nav_order` int(11) NOT NULL,
   `parent` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
