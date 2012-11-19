@@ -63,7 +63,7 @@
 		</div>
 	</div>
 	<footer>
-		Powered by <a href="http://daslampe.lano-crew.org">DasLampe</a>
+		Powered by <a href="http://github.com/DasLampe/impeesa2">Impeesa2 - CMS for Scouts</a> (&copy; Andre Flemming)
 	</footer>
 	{info_msg}
 </body>
