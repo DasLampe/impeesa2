@@ -55,6 +55,7 @@ class PictureView extends AbstractView
 		
 		$this->tpl->addJs("jquery.lightbox.js",		LINK_LIB."jquery-lightbox/js/");
 		$this->tpl->addCss("jquery.lightbox.css",	LINK_LIB."jquery-lightbox/css/");
+		$this->tpl->addCss("picture.css",			LINK_MAIN."pages/template/picture/");
 		$this->tpl->addJs("picture.js",				LINK_LIB."jquery-lightbox/js/");
 		$this->tpl->vars("userCanDelete",			false);
 		

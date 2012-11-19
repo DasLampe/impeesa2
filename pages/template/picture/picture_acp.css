@@ -1,15 +1,4 @@
 @CHARSET "UTF-8";
-.picture {
-	height: 200px;
-	position: relative;
-	float: left;
-	margin: 20px;
-}
-
-.picture a, .picture img {
-	position:relative;
-	z-index:2;
-}
 
 .picture .options {
 	-webkit-border-top-left-radius: 15px;
