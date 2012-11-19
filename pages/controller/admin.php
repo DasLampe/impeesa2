@@ -48,7 +48,7 @@ class AdminController extends AbstractController {
 			case '':
 			case 'home':
 			case 'config':
-				if(isset($_POST['submit']))
+				if(isset($_POST['submit']) && !preg_match("!admin\/!", $_SERVER['HTTP_REFERER']))
 				{ //Hack. If sitename of dynamic site is == home
 					continue;
 				}
