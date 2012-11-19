@@ -3,7 +3,8 @@
 // | Copyright (c) 2011 DasLampe <daslampe@lano-crew.org> |
 // | Encoding:  UTF-8 |
 // +----------------------------------------------------------------------+
-$dir	= explode("config", dirname(__FILE__));
+$dir		= explode("config", dirname(__FILE__));
+$protocol	= (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" : "http";
 
 define("PATH_MAIN",				$dir[0]);
 
@@ -24,7 +25,7 @@ define("PATH_PAGES_TPL",		PATH_PAGES."template/");
 define("PATH_CONTENT",			PATH_PAGES."content/");
 define("PATH_UPLOAD",			PATH_MAIN."uploads/");
 
-define("LINK_MAIN",				"http://localhost/impeesa2/");
+define("LINK_MAIN",				$protocol."://localhost/impeesa2/");
 define("LINK_TPL",				LINK_MAIN."template/");
 define("LINK_LIB",				LINK_MAIN."lib/");
 define("LINK_CORE_LIB",			LINK_MAIN."core/lib/");

@@ -1,9 +1,5 @@
 #AddType application/x-httpd-php5 .php
 
-
-php_value post_max_size 6M
-php_value upload_max_filesize 5M
-
 <Files *.conf.php>
   order allow,deny
   deny from all
@@ -11,6 +7,10 @@ php_value upload_max_filesize 5M
 
 RewriteEngine On
 #RewriteBase /
+
+RewriteCond %{SERVER_PORT} !^443$
+RewriteCond %{REQUEST_FILENAME} admin
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 
 RewriteCond %{REQUEST_FILENAME} .css$ [OR]
 RewriteCond %{REQUEST_FILENAME} .js$
