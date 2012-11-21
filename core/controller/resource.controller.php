@@ -27,22 +27,44 @@ class resourceController
 			}
 			else
 			{
-				 header("Content-Type: ".$type);
-				 $content		= file_get_contents(PATH_MAIN.$file);
-				 $search		= array(
-										"{LINK_TPL}",
-				 						"{LINK_LIB}",
-										"{LINK_MAIN}",
-				 						"{CURRENT_PAGE}"
-				 						);
-				 $replace		= array(
-										LINK_TPL,
-				 						LINK_LIB,
-										LINK_MAIN,
-				 						CURRENT_PAGE,
-				 						);
-				 $content		= str_replace($search, $replace, $content);
-
+				header("Content-Type: ".$type);
+				//Using cache to optimize page speed
+				header ("cache-control: must-revalidate; max-age: 2592000");
+				header ("expires: " . gmdate ("D, d M Y H:i:s", time() + 2592000) . " GMT");
+				
+				$content		= file_get_contents(PATH_MAIN.$file);
+				 
+				//Replace placeholder
+				$search		= array(
+					"{LINK_TPL}",
+					"{LINK_LIB}",
+					"{LINK_MAIN}",
+					"{CURRENT_PAGE}"
+				);
+				$replace		= array(
+					LINK_TPL,
+					LINK_LIB,
+					LINK_MAIN,
+					CURRENT_PAGE,
+				);
+				$content		= str_replace($search, $replace, $content);
+				
+				/**
+				* Remove whitespace characters & comments (in CSS files)
+				* Based on http://phpperformance.de/optimierungen-von-css-und-javascript-on-the-fly/
+				*/
+				if($type == "text/css") {
+					 $content		= preg_replace("!/\*[^*]*\*+([^/][^*]*\*+)*/!", "", $content);
+					 $search		= array("\r\n", "\r", "\n", "\t", "  ", "    ", "    ");
+					 $content		= str_replace($search, "", $content);
+				}
+				if($type == "text/javascript") {
+					 $content		= preg_replace('/(\n)\n+/', '$1', $content);
+					 $content		= preg_replace('/(\n)\ +/', '$1', $content);
+					 $content		= preg_replace('/(\r)\r+/', '$1', $content);
+					 $content = preg_replace('/(\r\n)(\r\n)+/', '$1', $content);
+					 $content = preg_replace('/(\ )\ +/', '$1', $content);
+				 }
 
 				echo $content;
 			}

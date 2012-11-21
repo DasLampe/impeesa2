@@ -6,6 +6,7 @@
 header('Content-Type: text/html; charset=utf-8');
 session_start();
 error_reporting(E_ALL);
+ob_start('ob_gzhandler');
 
 include_once(dirname(__FILE__)."/path.conf.php");
 include_once(dirname(__FILE__)."/db.conf.php");
