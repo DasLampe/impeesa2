@@ -29,6 +29,8 @@ class resourceController
 			{
 				 header("Content-Type: ".$type);
 				 $content		= file_get_contents(PATH_MAIN.$file);
+				 
+				 //Replace placeholder
 				 $search		= array(
 										"{LINK_TPL}",
 				 						"{LINK_LIB}",
@@ -42,7 +44,11 @@ class resourceController
 				 						CURRENT_PAGE,
 				 						);
 				 $content		= str_replace($search, $replace, $content);
-
+				 
+				 //Remove fill characters
+				 $content		= preg_replace("!/\*[^*]*\*+([^/][^*]*\*+)*/!", "", $content) ;
+				 $search		= array("\r\n", "\r", "\n", "\t", "  ", "    ", "    ") ;
+				 $content		= str_replace($search, "", $content) ;
 
 				echo $content;
 			}
