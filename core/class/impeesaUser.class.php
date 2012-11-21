@@ -293,6 +293,24 @@ class impeesaUser {
 		}
 		return false;
 	}
+	
+	public function SaveNewPassword($user_id, $password)
+	{
+		$password	= $this->CreatePasswordHash($password);
+		
+		$sth		= $this->db->prepare("UPDATE ".MYSQL_PREFIX."users SET
+									password	= :password,
+									salt		= :salt
+									WHERE id	= :user_id");
+		$sth->bindParam(":password",	$password[0]);
+		$sth->bindParam(":salt",		$password[1]);
+		$sth->bindParam(":user_id",		$user_id);
+		if($sth->execute())
+		{
+			return true;
+		}
+		return false;
+	}
 
 	public function CanAdd()
 	{

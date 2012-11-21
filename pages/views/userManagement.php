@@ -68,7 +68,7 @@ class userManagementView extends AbstractView
 		$userinfo	= $user->GetUserInfo($user_id);
 		
 		$firstname	= (!isset($data['first_name'])) ? $userinfo['first_name'] : $data['first_name'];
-		$name		= (!isset($data['name'])) ? $userinfo['name'] : $data['email'];
+		$name		= (!isset($data['name'])) ? $userinfo['name'] : $data['name'];
 		$email		= (!isset($data['email'])) ? $userinfo['email'] : $data['email'];
 		
 		$form_fields	= array(
@@ -79,6 +79,11 @@ class userManagementView extends AbstractView
 									array("email", "Email", "email", $email, True),
 									),
 								),
+							array("fieldset", "Passwort ändern", array(
+									array("password", "Neues Passwort", "pass1"),
+									array("password", "Passwort wiederholen", "pass2"),
+								),
+							),
 							array("fieldset", "", array(
 									array("submit", "Ändern", "submit"),
 								),
@@ -90,12 +95,18 @@ class userManagementView extends AbstractView
 			$content	= $form->GetForm($form_fields, CURRENT_PAGE);
 		}
 		else
-		{	
-			if($user->SaveUserData($user->GetUserId(), $data['first_name'], $data['name'], $data['email']) == true)
+		{
+			if((!empty($data['pass1']) xor !empty($data['pass2'])) || $data['pass2'] != $data['pass1'] ||
+				$user->SaveNewPassword($user->GetUserId(), $data['pass1']) == false)
+			{
+				$form->SetErrorMsg("Passwörter verschieden!");
+				$content	= $form->GetForm($form_fields, CURRENT_PAGE);
+			}
+			elseif($user->SaveUserData($user->GetUserId(), $data['first_name'], $data['name'], $data['email']) == true)
 			{
 				return impeesaLayer::SetInfoMsg($_SESSION, "Änderungen erfolgreich gespeichert", CURRENT_PAGE);
 			}
-			elseif(!isset($content))
+			else
 			{
 				$form->SetErrorMsg("Daten konnten nicht gespeichert werden");
 				$content	= $form->GetForm($form_fields, CURRENT_PAGE);
