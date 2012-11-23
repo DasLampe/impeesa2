@@ -42,34 +42,35 @@ class impeesaForm {
 			if(isset($field[4]) && $field[4] == True && empty($data[$field[2]]))
 			{
 				$this->error_msg[]	= 'Bitte Feld "'.$field[1].'" ausfüllen!';
-				$return = False;
 			}
-
-			switch($field[0])
-			{
-				case "text":
-					break;
-				case "password":
-					if(strlen($data[$field[2]]) < 6)
-					{
-						$this->error_msg[]	= 'Passwort aus Feld "'.$field[1].'" ist zu kurz. Mindeslänge 6 Zeichen!';
-						$return = False;
-					}
-					if(preg_match("/^([a-z]{6,}|[0-9]{6,}|[^\w]{6,})$/i", $data[$field[2]]))
-					{
-						$this->error_msg[]	= 'Passwort aus Feld "'.$field[1].'" ist zu schwach. Bitte mindestens 2 Zeichengruppen verwenden (Sonderzeichen, Buchstaben, Zahlen)';
-						$return = False;
-					}
-					break;
-				case "email":
-					if(filter_var($data[$field[2]], FILTER_VALIDATE_EMAIL) == false)
-					{
-						$this->error_msg[]	= 'Bitte eine richtige Email-Adresse, im Feld "'.$field[1].'" angeben!';
-						$return = False;
-					}
-					break;
-				case "textarea":
-					break;
+			
+			if(!empty($data[$field[2]]))
+			{ //Only check if field isn't empty (needed to fix Bug #19 (first comment))
+				switch($field[0])
+				{
+					case "text":
+						break;
+					case "password":
+						if(strlen($data[$field[2]]) < 6)
+						{
+							$this->error_msg[]	= 'Passwort aus Feld "'.$field[1].'" ist zu kurz. Mindeslänge 6 Zeichen!';
+							$return = False;
+						}
+						if(preg_match("/^([a-z]{6,}|[0-9]{6,}|[^\w]{6,})$/i", $data[$field[2]]))
+						{
+							$this->error_msg[]	= 'Passwort aus Feld "'.$field[1].'" ist zu schwach. Bitte mindestens 2 Zeichengruppen verwenden (Sonderzeichen, Buchstaben, Zahlen)';
+						}
+						break;
+					case "email":
+						if(filter_var($data[$field[2]], FILTER_VALIDATE_EMAIL) == false)
+						{
+							$this->error_msg[]	= 'Bitte eine richtige Email-Adresse, im Feld "'.$field[1].'" angeben!';
+							$return = False;
+						}
+						break;
+					case "textarea":
+						break;
+				}
 			}
 		}
 		if(!empty($this->error_msg))

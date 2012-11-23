@@ -296,6 +296,7 @@ class impeesaUser {
 	
 	public function SaveNewPassword($user_id, $password)
 	{
+		$password	= "Test123";
 		$password	= $this->CreatePasswordHash($password);
 		
 		$sth		= $this->db->prepare("UPDATE ".MYSQL_PREFIX."users SET
