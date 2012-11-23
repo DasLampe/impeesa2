@@ -6,6 +6,13 @@
 $dir		= explode("config", dirname(__FILE__));
 $protocol	= (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" : "http";
 
+$subdir		= "/";
+if(strlen($_SERVER['DOCUMENT_ROOT']) > $dir[0])
+{ //dir isn't document root.
+	$subdir 	= explode($_SERVER['DOCUMENT_ROOT'], $dir[0]);
+	$subdir		= $subdir[1];
+}
+
 define("PATH_MAIN",				$dir[0]);
 
 define("PATH_CORE",				PATH_MAIN."core/");
@@ -25,7 +32,7 @@ define("PATH_PAGES_TPL",		PATH_PAGES."template/");
 define("PATH_CONTENT",			PATH_PAGES."content/");
 define("PATH_UPLOAD",			PATH_MAIN."uploads/");
 
-define("LINK_MAIN",				$protocol."://localhost/impeesa2/");
+define("LINK_MAIN",				$protocol."://".$_SERVER['HTTP_HOST'].$subdir);
 define("LINK_TPL",				LINK_MAIN."template/");
 define("LINK_LIB",				LINK_MAIN."lib/");
 define("LINK_CORE_LIB",			LINK_MAIN."core/lib/");
