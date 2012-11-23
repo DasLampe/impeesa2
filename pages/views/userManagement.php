@@ -97,12 +97,12 @@ class userManagementView extends AbstractView
 		else
 		{
 			if((!empty($data['pass1']) xor !empty($data['pass2'])) || $data['pass2'] != $data['pass1'] ||
-				$user->SaveNewPassword($user->GetUserId(), $data['pass1']) == false)
+				$user->SaveNewPassword($user_id, $data['pass1']) == false)
 			{
 				$form->SetErrorMsg("Passwörter verschieden!");
 				$content	= $form->GetForm($form_fields, CURRENT_PAGE);
 			}
-			elseif($user->SaveUserData($user->GetUserId(), $data['first_name'], $data['name'], $data['email']) == true)
+			elseif($user->SaveUserData($user_id, $data['first_name'], $data['name'], $data['email']) == true)
 			{
 				return impeesaLayer::SetInfoMsg($_SESSION, "Änderungen erfolgreich gespeichert", CURRENT_PAGE);
 			}
