@@ -14,7 +14,10 @@ class ContactModel extends AbstractModel
 		foreach($user->GetAllUserIds() as $user_id)
 		{
 			$userinfo		= $user->GetUserInfo($user_id['id']);
-			$contact_user[]	= array($user_id['id'], $userinfo['first_name']);
+			if($userinfo['can_contact'])
+			{
+				$contact_user[]	= array($user_id['id'], $userinfo['first_name']);
+			}
 		}
 		
 		return $contact_user;

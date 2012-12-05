@@ -115,12 +115,12 @@ class impeesaUser {
 		return $row['salt'];
 	}
 	
-	public function CreateUser($username, $password, $first_name, $name, $email)
+	public function CreateUser($username, $password, $first_name, $name, $email, $can_contact)
 	{
 		$sth	= $this->db->prepare("INSERT INTO ".MYSQL_PREFIX."users
-									(username, password, salt, first_name, name, email, session_key)
+									(username, password, salt, first_name, name, email, can_contact, session_key)
 									VALUES
-									(:username, :password, :salt, :first_name, :name, :email, :session_key)");
+									(:username, :password, :salt, :first_name, :name, :email, :can_contact, :session_key)");
 		
 		$created_password	= $this->CreatePasswordHash($password);
 		$session_key		= substr(md5(time()), 0,6);
@@ -131,6 +131,7 @@ class impeesaUser {
 		$sth->bindParam(":first_name",		$first_name);
 		$sth->bindParam(":name",			$name);
 		$sth->bindParam(":email",			$email);
+		$sth->bindParam(":can_contact",		$can_contact);
 		$sth->bindParam(":session_key",		$session_key);
 		
 		if($sth->execute())
@@ -268,7 +269,7 @@ class impeesaUser {
 	
 	public function GetUserInfo($user_id)
 	{
-		$sth	= $this->db->prepare("SELECT username, email, name, first_name
+		$sth	= $this->db->prepare("SELECT username, email, name, first_name, can_contact
 									FROM ".MYSQL_PREFIX."users
 									WHERE id = :user_id");
 		$sth->execute(array(":user_id" => $user_id));
@@ -276,17 +277,19 @@ class impeesaUser {
 		return $row;
 	}
 	
-	public function SaveUserData($user_id, $first_name, $name, $email)
+	public function SaveUserData($user_id, $first_name, $name, $email, $can_contact)
 	{
 		$sth	= $this->db->prepare("UPDATE ".MYSQL_PREFIX."users SET
 									first_name	= :first_name,
 									name		= :name,
-									email		= :email
+									email		= :email,
+									can_contact	= :can_contact
 									WHERE id	= :user_id");
 		$sth->bindParam(":user_id",			$user_id);
 		$sth->bindParam(":first_name",		$first_name);
 		$sth->bindParam(":name",			$name);
 		$sth->bindParam(":email",			$email);
+		$sth->bindParam(":can_contact",		$can_contact);
 		if($sth->execute())
 		{
 			return true;
@@ -296,7 +299,6 @@ class impeesaUser {
 	
 	public function SaveNewPassword($user_id, $password)
 	{
-		$password	= "Test123";
 		$password	= $this->CreatePasswordHash($password);
 		
 		$sth		= $this->db->prepare("UPDATE ".MYSQL_PREFIX."users SET

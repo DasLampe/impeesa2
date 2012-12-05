@@ -15,10 +15,17 @@ class userManagementView extends AbstractView
 		include_once(PATH_CORE_CLASS."impeesaForm.class.php");
 		$form		= new impeesaForm();
 		
+		if(!isset($data['submit']) && $userinfo['can_contact'] == 1)
+		{
+			$data['can_contact'] = True;
+		}
+		
 		$username		= (isset($data['username'])) ? $data['username'] : "";
 		$first_name		= (isset($data['first_name'])) ? $data['first_name'] : "";
 		$name			= (isset($data['name'])) ? $data['name'] : "";
 		$email			= (isset($data['email'])) ? $data['email'] : "";
+		$can_contact	= (isset($data['can_contact'])) ? $data['can_contact'] : True;
+			
 		$form_fields	= array(
 				array("fieldset", "Login Informationen", array(
 						array("text", "Username", "username", $username, True),
@@ -29,6 +36,7 @@ class userManagementView extends AbstractView
 						array("text", "Vorname", "first_name", $first_name, True),
 						array("text", "Nachname", "name", $name, True),
 						array("email", "Email", "email", $email, True),
+						array("checkbox", "Kontaktierbar", "can_contact", $can_contact),
 					),
 				),
 				array("fieldset", "", array(
@@ -67,9 +75,15 @@ class userManagementView extends AbstractView
 		
 		$userinfo	= $user->GetUserInfo($user_id);
 		
-		$firstname	= (!isset($data['first_name'])) ? $userinfo['first_name'] : $data['first_name'];
-		$name		= (!isset($data['name'])) ? $userinfo['name'] : $data['name'];
-		$email		= (!isset($data['email'])) ? $userinfo['email'] : $data['email'];
+		if(!isset($data['submit']) && $userinfo['can_contact'] == 1)
+		{
+			$data['can_contact'] = True;
+		}
+		
+		$firstname		= (!isset($data['first_name'])) ? $userinfo['first_name'] : $data['first_name'];
+		$name			= (!isset($data['name'])) ? $userinfo['name'] : $data['name'];
+		$email			= (!isset($data['email'])) ? $userinfo['email'] : $data['email'];
+		$can_contact	= (!isset($data['can_contact'])) ? False : True;
 		
 		$form_fields	= array(
 							array("fieldset", "Aktuelles Profil", array(
@@ -77,6 +91,7 @@ class userManagementView extends AbstractView
 									array("text", "Vorname", "first_name", $firstname, True),
 									array("text", "Nachname", "name", $name, True),
 									array("email", "Email", "email", $email, True),
+									array("checkbox", "Kontaktierbar", "can_contact", $can_contact),
 									),
 								),
 							array("fieldset", "Passwort ändern", array(
@@ -105,7 +120,7 @@ class userManagementView extends AbstractView
 				}
 			}
 			
-			if($user->SaveUserData($user_id, $data['first_name'], $data['name'], $data['email']) == true)
+			if($user->SaveUserData($user_id, $data['first_name'], $data['name'], $data['email'], $can_contact) == true)
 			{
 				return impeesaLayer::SetInfoMsg($_SESSION, "Änderungen erfolgreich gespeichert", CURRENT_PAGE);
 			}
