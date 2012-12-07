@@ -9,6 +9,8 @@ include_once(dirname(__FILE__)."/impeesaInstall.class.php");
 <head>
 	<title>Installation - Impeesa2 CMS for Scouts</title>
 	<link href="<?= LINK_TPL; ?>css/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
 <h1>Impeesa2 - Installation</h1>
 
 <?php
@@ -43,3 +45,5 @@ elseif($_GET['step'] == "3") {
 <?php
 }
 ?>
+</body>
+</html>

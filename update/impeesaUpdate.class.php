@@ -36,13 +36,29 @@ class impeesaUpdate {
 		$files_to_check	= array(PATH_UPLOAD."news/", PATH_UPLOAD."picture/" ,PATH_MAIN."tmp/");
 		foreach($files_to_check as $check) {
 			if(is_writable($check)) {
-				echo '<p class="success">'.$check.' ist beschreibbar.</p>';
+				echo '<p class="box success">'.$check.' ist beschreibbar.</p>';
 			} elseif(chmod($check, 766)) {
-				echo '<p class="success">'.$check.' war nicht beschreibbar. Impeesa2 konnte dieses Problem jedoch beheben.</p>';
+				echo '<p class="box success">'.$check.' war nicht beschreibbar. Impeesa2 konnte dieses Problem jedoch beheben.</p>';
 			} else {
-				echo '<p class="error">'.$check.' ist nicht beschreibar & rechte können nicht gesetzt werden. Bitte entsprechende manuell Rechte setzen!</p>';
+				echo '<p class="box error">'.$check.' ist nicht beschreibar & rechte können nicht gesetzt werden. Bitte entsprechende manuell Rechte setzen!</p>';
 			}
 		}
+	}
+	
+	public function UpdateDatabase() {
+		include_once(PATH_MAIN."config/db.conf.php");
+		
+		$db		= impeesaDb::getConnection();
+		
+		$sqldump	= $this->ParseMysqlDump(PATH_MAIN."db_migration/".$this->version.".sql");
+		try {
+			$db->exec($sqldump);
+			echo '<p class="box success">Datenbank wurde aktuallisiert!<p>';
+		}
+		catch(PDOException $e) {
+			echo '<p class="box error">Die Datenbank konnte nicht aktuallisiert werden.<br/>Bitte führen Sie den SQL aus der Datei '.PATH_MAIN."db_migration/".$this->version.".sql manuell aus.<p>";
+		}
+		echo '<p><a href="'.$this->self.'?step=1">Datei- & Ordnerberechtiung checken</a></p>';
 	}
 	
 	/**
