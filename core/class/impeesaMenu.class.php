@@ -75,7 +75,8 @@ class impeesaMenu
 		$sth	= $this->db->prepare("SELECT name, menu_title
 									FROM ".MYSQL_PREFIX."content
 									WHERE parent = :parent_id
-										AND in_nav = :in_nav");
+										AND in_nav = :in_nav
+									ORDER BY nav_order");
 		$sth->bindParam(":parent_id",	$parent_id);
 		$sth->bindParam(":in_nav",		$in_nav);
 		$sth->execute();
