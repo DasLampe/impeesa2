@@ -66,5 +66,6 @@
 		Powered by <a href="http://github.com/DasLampe/impeesa2">Impeesa2 - CMS for Scouts</a> (&copy; Andre Flemming)
 	</footer>
 	{info_msg}
+	<?php include_once(PATH_TPL."_custom_foot.php"); //Use for e.g. PiWik-Tracking Code ?>
 </body>
 </html>
