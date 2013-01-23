@@ -116,8 +116,8 @@ class PictureView extends AbstractView
 		
 		$form_fields	= array(
 								array("fieldset", "Album informationen", array(
-										array("text", "Album", "name", "", True),
-										array("year", "Jahr", "year", "", True),
+										array("text", "Album", "name", (isset($data['name'])) ? $data['name'] : "", True),
+										array("year", "Jahr", "year", (isset($data['year'])) ? $data['year'] : "", True),
 										),
 									),
 								array("submit", "Album erstelen", "submit"),
