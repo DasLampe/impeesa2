@@ -39,6 +39,10 @@ class PictureModel extends AbstractModel
 		{
 			$picture	= array();
 			$handle		= opendir(PATH_UPLOAD.'picture/'.$dir);
+			if($handle === false) {
+				throw new impeesaException("Can't open ".PATH_UPLOAD."picture/");
+			}
+			
 			while(false !== ($file	= readdir($handle)))
 			{
 				if(preg_match("/.(jpg|jpeg)$/i",$file))
