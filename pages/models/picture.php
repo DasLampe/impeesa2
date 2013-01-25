@@ -39,6 +39,10 @@ class PictureModel extends AbstractModel
 		{
 			$picture	= array();
 			$handle		= opendir(PATH_UPLOAD.'picture/'.$dir);
+			if($handle === false) {
+				throw new impeesaException("Can't open ".PATH_UPLOAD."picture/");
+			}
+			
 			while(false !== ($file	= readdir($handle)))
 			{
 				if(preg_match("/.(jpg|jpeg)$/i",$file))
@@ -165,4 +169,40 @@ class PictureModel extends AbstractModel
 		return false;
 	}
 	
+	public function RemoveAlbum($album_name) {
+		if(file_exists(PATH_UPLOAD."picture/".$album_name)) {
+			if($this->RemoveAlbumRecursive(PATH_UPLOAD."picture/".$album_name)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	private function RemoveAlbumRecursive($filename) {
+		if(is_dir($filename)) {
+			$dir		= dir($filename);
+			while(false !== ($file	= $dir->read())) {
+				if($file != "." && $file != "..") {
+					//Delte all files. Throw exception if can't delte any file
+					if($this->RemoveAlbumRecursive($dir->path."/".$file) == false) {
+						throw new impeesaException("Can't delete ".$dir->path."/".$file);
+					}
+				}
+			}
+
+			//Delete dir
+			if(rmdir($filename) == true) {
+				return true;
+			}
+			return false;
+		}
+		else
+		{
+			if(unlink($filename) == false) {
+				return false;
+			}
+			return true;
+		}
+		throw new impeesaException("WTF? File isn't a dir or file. Something crazy!");
+	}
 }

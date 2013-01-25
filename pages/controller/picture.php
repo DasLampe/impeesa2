@@ -51,6 +51,12 @@ class PictureController extends AbstractController
 				}
 				throw new impeesaPermissionException("Can't delete picture!");
 				break;
+			case "removeAlbum":
+				if($user->CanDelete() == true) {
+					return $this->view->RemoveAlbumView($this->param[3]);
+				}
+				throw new impeesaPermissionException("Can't remove album!");
+				break;
 		}
 	}
 }

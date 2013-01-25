@@ -68,6 +68,16 @@ class impeesaForm {
 							$return = False;
 						}
 						break;
+					case "year":
+						if(!is_numeric($data[$field[2]]) || strlen($data[$field[2]]) != 4) {
+							$this->error_msg[]	= 'Inhalt des Feldes "'.$field[1].'" muss aus 4 Ziffern bestehen.';
+						}
+						break;
+					case "number":
+						if(!is_numeric($data[$field[2]])) {
+							$this->error_msg[]	= 'Es dürfen nur Zahlen im Feld "'.$field[1].'" verwendet werden.';
+						}
+						break;
 					case "textarea":
 						break;
 				}

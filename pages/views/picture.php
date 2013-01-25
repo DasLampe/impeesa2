@@ -16,7 +16,7 @@ class PictureView extends AbstractView
 		{
 			$layer			= impeesaLayer::getInstance();
 		
-			$layer->AddButton('<a href="'.LINK_ACP.'picture/newAlbum">Neues Album</a>');
+			$layer->AddButton('<a href="'.LINK_ACP.'picture/newAlbum" class="ym-add">&nbsp;Neues Album</a>');
 		}
 		
 		$albums_return = "";
@@ -64,6 +64,9 @@ class PictureView extends AbstractView
 			$this->tpl->addJs("picture_acp.js",		LINK_MAIN."pages/template/picture/");
 			$this->tpl->addCss("picture_acp.css",	LINK_MAIN."pages/template/picture/");
 			$this->tpl->vars("userCanDelete",		true);
+			
+			$layer	= impeesaLayer::getInstance();
+			$layer->AddButton('<a href="'.LINK_ACP.'picture/removeAlbum/'.$album.'" class="ym-delete">&nbsp;Album löschen</a>');
 		}
 		
 		$gallery	= "";
@@ -116,8 +119,8 @@ class PictureView extends AbstractView
 		
 		$form_fields	= array(
 								array("fieldset", "Album informationen", array(
-										array("text", "Album", "name", "", True),
-										array("year", "Jahr", "year", "", True),
+										array("text", "Album", "name", (isset($data['name'])) ? $data['name'] : "", True),
+										array("year", "Jahr", "year", (isset($data['year'])) ? $data['year'] : "", True),
 										),
 									),
 								array("submit", "Album erstelen", "submit"),
@@ -146,5 +149,14 @@ class PictureView extends AbstractView
 			return impeesaLayer::SetInfoMsg($_SESSION, "Bild erfolgreich gelöscht!", LINK_MAIN."picture/".$album_name);
 		}
 		return impeesaLayer::SetInfoMsg($_SESSION, "Bild konnte nicht gelöscht werden!", LINK_MAIN."picture/".$album_name, "error");
+	}
+	
+	public function RemoveAlbumView($album_name) {
+		include_once(PATH_MODEL."picture.php");
+		$this->model	= new PictureModel();
+		if($this->model->RemoveAlbum($album_name) == true) {
+			return impeesaLayer::SetInfoMsg($_SESSION, "Album wurde erfolgreich gelöscht!", LINK_MAIN."picture");
+		}
+		return impeesaLayer::SetInfoMsg($_SESSION, "Album konnte nicht gelöscht werden!", LINK_MAIN."picture/".$album_name, "error");
 	}
 }

@@ -29,6 +29,10 @@ class pageController
 
 			try
 			{
+				if(isset($_SESSION['user_id']) && !isset($_SERVER['HTTPS'])) {
+					throw new impeesaException("Doesn't use https as user!!");
+				}
+				
 				if(file_exists(PATH_CONTROLLER.$this->param[0].".php"))
 				{
 					include_once(PATH_CONTROLLER.$this->param[0].".php");
