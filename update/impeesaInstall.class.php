@@ -73,7 +73,7 @@ class impeesaInstall extends impeesaUpdate {
 			
 			echo '<p class="success">Datei '.PATH_MAIN.'config/db.conf.php wurde erfolgreich erstellt.</p>';
 			
-			$this->CreateTableForm();
+			$this->CreateTable();
 			
 			return true;
 		}
