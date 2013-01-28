@@ -68,7 +68,7 @@ class impeesaInstall extends impeesaUpdate {
 			{
 				throw new Exception("Can't open file");
 			}
-			fwrite($db_config, $file);
+			fwrite($file, $db_config);
 			fclose($file);
 			
 			echo '<p class="success">Datei '.PATH_MAIN.'config/db.conf.php wurde erfolgreich erstellt.</p>';
