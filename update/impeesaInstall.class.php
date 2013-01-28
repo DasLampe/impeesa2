@@ -49,7 +49,7 @@ class impeesaInstall extends impeesaUpdate {
 		}
 	}
 	
-	public function CreateDatabaseConfigFile($db, $host, $user, $password, $prefix) {
+	public function CreateDatabaseConfigFile($host, $db, $user, $password, $prefix) {
 		$db_config	= "<?php
 						/** Generated file of impeesa2 install script.
 						*DON'T TOUCH IT!!! (if the system runs wihtout problems)
