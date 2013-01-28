@@ -7,7 +7,7 @@ $dir		= explode("config", dirname(__FILE__));
 $protocol	= (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" : "http";
 
 $subdir		= "/";
-if(strlen($_SERVER['DOCUMENT_ROOT']) > $dir[0])
+if(strlen($_SERVER['DOCUMENT_ROOT']) < strlen($dir[0]))
 { //dir isn't document root.
 	$subdir 	= explode($_SERVER['DOCUMENT_ROOT'], $dir[0]);
 	$subdir		= $subdir[1];
