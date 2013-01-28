@@ -117,6 +117,11 @@ class impeesaUser {
 	
 	public function CreateUser($username, $password, $first_name, $name, $email, $can_contact)
 	{
+		//If $can_contact is bool
+		if(is_bool($can_contact)) {
+			$can_contact = (int) $can_contact;
+		}
+		
 		$sth	= $this->db->prepare("INSERT INTO ".MYSQL_PREFIX."users
 									(username, password, salt, first_name, name, email, can_contact, session_key)
 									VALUES

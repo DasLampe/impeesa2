@@ -57,9 +57,11 @@ class userManagementView extends AbstractView
 			}
 			else
 			{
-				$user->CreateUser($data['username'], $data['pass'], $data['first_name'], $data['name'], $data['email']);
-		
-				return impeesaLayer::SetInfoMsg($_SESSION, "Registierung erfolgreich", LINK_MAIN);
+				if($user->CreateUser($data['username'], $data['pass'], $data['first_name'], $data['name'], $data['email'], $data['can_contact'])) {
+					return impeesaLayer::SetInfoMsg($_SESSION, "Registierung erfolgreich", LINK_MAIN);
+				} else {
+					return impeesaLayer::SetInfoMsg($_SESSION, "Registierung fehlgeschlagen!", CURRENT_PAGE, "error");
+				}
 			}
 		}
 		
