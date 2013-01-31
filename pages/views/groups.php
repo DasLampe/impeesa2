@@ -17,7 +17,7 @@ class GroupsView extends AbstractView {
 			$this->tpl->vars("group_day",			$group['day']);
 			$this->tpl->vars("group_begin",			date("H:i", strtotime($group['begin'])));
 			$this->tpl->vars("group_end",			date("H:i", strtotime($group['end'])));
-			//$this->tpl->vars("group_leader",		implode(',', $this->model->GetLeader($group['id']));
+			$this->tpl->vars("group_leader",		implode(', ', $this->model->GetLeader($group['id'])));
 			$this->tpl->vars("group_logo",			$group['logo']);
 			$groups	.= $this->tpl->load("_group", PATH_PAGES_TPL."groups/");
 		}
