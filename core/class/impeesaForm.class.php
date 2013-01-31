@@ -152,9 +152,14 @@ class impeesaForm {
 				return $this->tpl->load("_form_checkbox");
 				break;
 			case 'text':
-			case 'email':
-			case 'year':
 				return $this->tpl->load("_form_text");
+				break;
+			case 'email':
+				return $this->tpl->load("_form_email");
+				break;
+			case 'year':
+				$this->tpl->vars("max_number",	"4");
+				return $this->tpl->load("_form_number");
 				break;
 			case 'static':
 				return $this->tpl->load("_form_static");
