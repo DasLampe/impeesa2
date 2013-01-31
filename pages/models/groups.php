@@ -101,6 +101,29 @@ class GroupsModel extends AbstractModel {
 		}
 	}
 	
+	public function ReadLogos() {
+		$files	= array();
+		if(file_exists(PATH_PAGES_TPL."groups/img/"))
+		{
+			$handle		= opendir(PATH_PAGES_TPL."groups/img/");
+			if($handle === false) {
+				throw new impeesaException("Can't open ".PATH_PAGES_TPL."groups/img/");
+			}
+			
+			while(false !== ($file	= readdir($handle)))
+			{
+				if(preg_match("/.(jpg|jpeg|png)$/i",$file))
+				{
+					$files[]	= array(
+									"filename"	=> $file,
+									"name"		=> ucfirst(substr($file, 0, strrpos($file, "."))),
+								);
+				}
+			}
+		}
+		return $files;
+	}
+	
 	private function CreateNewGroup($name, $description, $youngest, $oldest, $day, $begin, $end, $logo, $in_overview) {
 		$sth	= $this->db->prepare("INSERT INTO ".MYSQL_PREFIX."groups
 									(name, description, youngest, oldest, day, begin, end, logo, in_overview)

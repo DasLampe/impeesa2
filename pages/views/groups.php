@@ -88,6 +88,7 @@ class GroupsView extends AbstractView {
 							"in_overview"	=> True,
 							"youngest"		=> "",
 							"oldest"		=> "",
+							"day"			=> "",
 							"begin"			=> "",
 							"end"			=> "",
 							"description"	=> "",
@@ -100,8 +101,13 @@ class GroupsView extends AbstractView {
 		
 		$form_fields	= array(
 								array('fieldset', '', array(
-									array('text', 'Name', 'name', $data['name'], True),
-									array('checkbox', 'Reguläre Gruppe', 'in_overview', 'in_overview', False, $data['in_overview']),
+										array('text', 'Name', 'name', $data['name'], True),
+										array('checkbox', 'Reguläre Gruppe', 'in_overview', 'in_overview', False, $data['in_overview']),
+										array('select', 'Logo', 'logo', array(
+											array('option', 'Bitte auswählen', '', True),
+											//Fill with data below
+											), 
+										True),
 									),
 								),
 								array('fieldset', 'Allgemeine Infos', array(
@@ -113,15 +119,9 @@ class GroupsView extends AbstractView {
 									array('fieldset', 'Gruppenstunden', array(
 										array('select', 'Tag', 'day', array(
 												array('option', 'Bitte auswählen', '', True, True),
-												array('option', 'Montag', 'Montag'),
-												array('option', 'Dienstag', 'Dienstag'),
-												array('option', 'Mittwoch', 'Mittwoch'),
-												array('option', 'Donnerstag', 'Donnerstag'),
-												array('option', 'Freitag', 'Freitag'),
-												array('option', 'Samstag', 'Samstag'),
-												array('option', 'Sonntag', 'Sonntag'),
+												//Fill with data below
 												),
-												True),
+											True),
 											array('time', 'Begin', 'begin', date("H:i", strtotime($data['begin'])), True),
 											array('time', 'Ende', 'end', date("H:i", strtotime($data['end'])), True),
 											),
@@ -141,6 +141,18 @@ class GroupsView extends AbstractView {
 									),
 								),
 							);
+		
+		//Fill logo
+		foreach($this->model->ReadLogos() as $logo) {
+			$selected			= (isset($data['logo']) && $data['logo'] == $logo['filename']) ? True : False;
+			$form_fields[0][2][2][3][]	= array('option', $logo['name'], $logo['filename'], $selected);
+		}
+
+		//Fill day
+		foreach(array("Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag") as $day) {
+			$selected	= (isset($data['day']) && $day == $data['day']) ? True : False;
+			$form_fields[1][2][1][2][0][3][]	= array('option', $day, $day, $selected);
+		}
 		
 		//Fill leader
 		$all_leader	= $this->model->GetLeader($group_id);
@@ -165,7 +177,7 @@ class GroupsView extends AbstractView {
 		}
 		
 		//Save
-		if($this->model->SaveGroup($data['name'], $data['description'], $data['youngest'], $data['oldest'], $data['day'], $data['begin'], $data['end'], "woes.jpg", $data['leader'], $data['in_overview'], $group_id) == true) {
+		if($this->model->SaveGroup($data['name'], $data['description'], $data['youngest'], $data['oldest'], $data['day'], $data['begin'], $data['end'], $data['logo'], $data['leader'], $data['in_overview'], $group_id) == true) {
 			return impeesaLayer::SetInfoMsg($_SESSION, "Gruppe ".$data['name']." wurde erfolgreich gespeichert.", LINK_MAIN."groups/");
 		}
 		return impeesaLayer::SetInfoMsg($_SESSION, "Gruppe konnte nicht gespeichert werden!", CURRENT_PAGE, "error");
