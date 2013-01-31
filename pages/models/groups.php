@@ -47,7 +47,7 @@ class GroupsModel extends AbstractModel {
 		$in_overview	= ($in_overview == True) ? 1 : 0;
 		
 		if($id == null) {
-			if( $id = ($this->CreateNewGroup($name, $description, $youngest, $oldest, $day, $begin, $end, $logo, $in_overview) == false)) {
+			if( ($id = $this->CreateNewGroup($name, $description, $youngest, $oldest, $day, $begin, $end, $logo, $in_overview)) == false) {
 				throw new impeesaException("Can't create group!");
 			}
 		}

@@ -91,6 +91,7 @@ class GroupsView extends AbstractView {
 							"begin"			=> "",
 							"end"			=> "",
 							"description"	=> "",
+							"leader"		=> "",
 						);
 		}
 		if(!isset($data['in_overview'])) {
@@ -115,8 +116,12 @@ class GroupsView extends AbstractView {
 												array('option', 'Montag', 'Montag'),
 												array('option', 'Dienstag', 'Dienstag'),
 												array('option', 'Mittwoch', 'Mittwoch'),
+												array('option', 'Donnerstag', 'Donnerstag'),
+												array('option', 'Freitag', 'Freitag'),
+												array('option', 'Samstag', 'Samstag'),
+												array('option', 'Sonntag', 'Sonntag'),
 												),
-											),
+												True),
 											array('time', 'Begin', 'begin', date("H:i", strtotime($data['begin'])), True),
 											array('time', 'Ende', 'end', date("H:i", strtotime($data['end'])), True),
 											),
@@ -138,11 +143,14 @@ class GroupsView extends AbstractView {
 							);
 		
 		//Fill leader
-		$all_leader	= (is_numeric($group_id)) ? $this->model->GetLeader($group_id) : array();
+		$all_leader	= $this->model->GetLeader($group_id);
 		foreach($user->GetAllUserIds() as $leader) {
 			$userinfo				= $user->GetUserInfo($leader['id']);
 			$name					= $userinfo['first_name'].' '.$userinfo['name'];
-			$is_leader				= (in_array($name, $all_leader)) ? True : False;
+			$is_leader				= False;
+			if((!empty($data['leader']) && in_array($leader['id'], $data['leader'])) || (!isset($data['submit']) && in_array($name, $all_leader))) {
+				$is_leader = True;
+			}
 			
 			$form_fields[3][2][]	= array('checkbox', $userinfo['first_name'].' '.$userinfo['name'], 'leader[]', $leader['id'], False, $is_leader);
 		}
