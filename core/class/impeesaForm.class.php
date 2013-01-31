@@ -148,7 +148,7 @@ class impeesaForm {
 				return $this->tpl->load("_form_option");
 				break;
 			case 'checkbox':
-				$this->tpl->vars("checked",		$this->IsCheckedField($field[3]));
+				$this->tpl->vars("checked",		$this->IsCheckedField($field[5]));
 				return $this->tpl->load("_form_checkbox");
 				break;
 			case 'text':
