@@ -36,7 +36,7 @@ class userManagementView extends AbstractView
 						array("text", "Vorname", "first_name", $first_name, True),
 						array("text", "Nachname", "name", $name, True),
 						array("email", "Email", "email", $email, True),
-						array("checkbox", "Kontaktierbar", "can_contact", $can_contact),
+						array("checkbox", "Kontaktierbar", "can_contact", "can_contact", False, $can_contact),
 					),
 				),
 				array("fieldset", "", array(
@@ -93,7 +93,7 @@ class userManagementView extends AbstractView
 									array("text", "Vorname", "first_name", $firstname, True),
 									array("text", "Nachname", "name", $name, True),
 									array("email", "Email", "email", $email, True),
-									array("checkbox", "Kontaktierbar", "can_contact", $can_contact),
+									array("checkbox", "Kontaktierbar", "can_contact", "can_contact", False, $can_contact),
 									),
 								),
 							array("fieldset", "Passwort ändern", array(

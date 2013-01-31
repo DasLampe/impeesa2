@@ -148,7 +148,7 @@ class impeesaForm {
 				return $this->tpl->load("_form_option");
 				break;
 			case 'checkbox':
-				$this->tpl->vars("checked",		$this->IsCheckedField($field[3]));
+				$this->tpl->vars("checked",		$this->IsCheckedField($field[5]));
 				return $this->tpl->load("_form_checkbox");
 				break;
 			case 'text':
@@ -160,6 +160,9 @@ class impeesaForm {
 			case 'year':
 				$this->tpl->vars("max_number",	"4");
 				return $this->tpl->load("_form_number");
+				break;
+			case 'time':
+				return $this->tpl->load("_form_time");
 				break;
 			case 'static':
 				return $this->tpl->load("_form_static");

@@ -4,3 +4,5 @@ uploads/**/*
 
 *.conf.php
 !path.conf.php
+
+!db_migration/*.sql

@@ -28,6 +28,11 @@ class SidebarController extends AbstractController {
 			$view		= new CalenderView();
 			$return_content	.= $view->SidebarView();
 		}
+		if($this->param[0] == "groups") {
+			include_once(PATH_VIEW."groups.php");
+			$view		= new GroupsView();
+			$return_content	.= $view->SidebarView();
+		}
 		
 		return $return_content;
 	}

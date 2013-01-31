@@ -83,7 +83,7 @@ class ContentView extends AbstractView {
 								),
 							array("fieldset", "Menü", array(
 									array("text", "Menütitel", "menu_title", $menu_title, True),
-									array("checkbox", "In Menü anzeigen", "in_nav", $in_nav, False),
+									array("checkbox", "In Menü anzeigen", "in_nav", 'in_nav', False, $in_nav),
 								),
 							),
 							array("fieldset", "", array(
@@ -139,7 +139,7 @@ class ContentView extends AbstractView {
 								),
 							array("fieldset", "Menü", array(
 									array("text", "Menütitel", "menu_title", $menu_title, True),
-									array("checkbox", "In Menü anzeigen", "in_nav", $in_nav, False),
+									array("checkbox", "In Menü anzeigen", "in_nav", 'in_nav', False, $in_nav),
 								),
 							),
 							array("fieldset", "", array(
