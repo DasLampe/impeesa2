@@ -30,5 +30,8 @@ class GroupsController extends AbstractController {
 				return $this->view->EditView($_POST);
 			}
 		}
+		elseif($this->param[2] == "delete") {
+			return $this->view->DeleteView($this->param[3]);
+		} 
 	}
 }

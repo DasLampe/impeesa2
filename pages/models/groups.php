@@ -85,6 +85,22 @@ class GroupsModel extends AbstractModel {
 		return true;
 	}
 	
+	public function DeleteGroup($group_id) {
+		$this->db->beginTransaction();
+		try {
+			$sth	= $this->db->prepare("DELETE FROM ".MYSQL_PREFIX."groups WHERE id = :group_id");
+			$sth->bindParam(":group_id",		$group_id);
+			if($sth->execute() == true && $this->ClearLeaderOfGroup($group_id) == true) {
+				$this->db->commit();
+				return true;
+			}
+			return false;
+		} catch(PDOException $e) {
+			$this->db->rollBack();
+			throw new impeesaException("PDO ERROR!! ".$e->getMessage());
+		}
+	}
+	
 	private function CreateNewGroup($name, $description, $youngest, $oldest, $day, $begin, $end, $logo, $in_overview) {
 		$sth	= $this->db->prepare("INSERT INTO ".MYSQL_PREFIX."groups
 									(name, description, youngest, oldest, day, begin, end, logo, in_overview)
@@ -134,6 +150,6 @@ class GroupsModel extends AbstractModel {
 	private function ClearLeaderOfGroup($group_id) {
 		$sth	= $this->db->prepare("DELETE FROM ".MYSQL_PREFIX."groups_leader WHERE group_id = :group_id");
 		$sth->bindParam(":group_id",	$group_id);
-		$sth->execute();
+		return $sth->execute();
 	}
 }

@@ -163,6 +163,16 @@ class GroupsView extends AbstractView {
 		return impeesaLayer::SetInfoMsg($_SESSION, "Gruppe konnte nicht gespeichert werden!", CURRENT_PAGE, "error");
 	}
 	
+	public function DeleteView($group_id) {
+		include_once(PATH_MODEL."groups.php");
+		$this->model	= new GroupsModel();
+		
+		if($this->model->DeleteGroup($group_id) == true) {
+			return impeesaLayer::SetInfoMsg($_SESSION, "Gruppe wurde erfolgreich gelöscht.", LINK_ACP."groups");
+		}
+		return impeesaLayer::SetInfoMsg($_SESSION, "Gruppe konnte nicht gelöscht werden.", LINK_ACP."groups", "error");
+	}
+	
 	public function SidebarView() {
 		$menu_array	= array(
 				array(
