@@ -108,6 +108,10 @@ class AdminView extends AbstractView {
 					"page_url"		=> LINK_ACP."content",
 					"page_title"	=> "Seiten verwalten",
 				),
+				array(
+					"page_url"		=> LINK_ACP."groups",
+					"page_title"	=> "Gruppen verwalten",
+				),
 		);
 		
 		$menu_items	= "";

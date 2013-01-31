@@ -13,4 +13,22 @@ class GroupsController extends AbstractController {
 		}
 		return $this->view->MainView();
 	}
+	
+	public function AdminController() {
+		include_once(PATH_VIEW."groups.php");
+		$this->view		= new GroupsView();
+		
+		if(!isset($this->param[2])) {
+			return $this->view->AdminView();
+		}
+		elseif($this->param[2] == "edit")
+		{
+			if(isset($this->param[3])) {
+				return $this->view->EditView($_POST, $this->param[3]);
+			}
+			else {
+				return $this->view->EditView($_POST);
+			}
+		}
+	}
 }

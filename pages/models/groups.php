@@ -5,13 +5,24 @@
 // +----------------------------------------------------------------------+
 class GroupsModel extends AbstractModel {
 	public function GetAllGroups($in_overview=1) {
-		$sth	= $this->db->prepare("SELECT id, name, description, day, youngest, oldest, begin, end, logo
+		$sth	= $this->db->prepare("SELECT id, name, description, day, youngest, oldest, begin, end, logo, in_overview
 									FROM ".MYSQL_PREFIX."groups
 									WHERE in_overview = 1
 										OR in_overview = :in_overview");
 		$sth->bindParam(":in_overview",			$in_overview);
 		$sth->execute();
+
 		return $sth->fetchAll();
+	}
+	
+	public function GetGroup($group_id) {
+		$sth	= $this->db->prepare("SELECT id, name, description, day, youngest, oldest, begin, end, logo, in_overview
+									FROM ".MYSQL_PREFIX."groups
+									WHERE id = :group_id");
+		$sth->bindParam(":group_id",	$group_id);
+		$sth->execute();
+
+		return $sth->fetch();
 	}
 	
 	public function GetLeader($group_id) {
@@ -32,9 +43,11 @@ class GroupsModel extends AbstractModel {
 		return $leader;
 	}
 	
-	public function SaveGroup($name, $description, $youngest, $oldest, $day, $begin, $end, $logo, array $leader, $id=null) {
+	public function SaveGroup($name, $description, $youngest, $oldest, $day, $begin, $end, $logo, array $leader, $in_overview, $id=null) {
+		$in_overview	= ($in_overview == True) ? 1 : 0;
+		
 		if($id == null) {
-			if( $id = ($this->CreateNewGroup($name, $description, $youngest, $oldest, $day, $begin, $end, $logo) == false)) {
+			if( $id = ($this->CreateNewGroup($name, $description, $youngest, $oldest, $day, $begin, $end, $logo, $in_overview) == false)) {
 				throw new impeesaException("Can't create group!");
 			}
 		}
@@ -48,7 +61,8 @@ class GroupsModel extends AbstractModel {
 								day			= :day,
 								begin		= :begin,
 								end			= :end,
-								logo		= :logo
+								logo		= :logo,
+								in_overview	= :in_overview
 								WHERE id	= :group_id");
 			$sth->bindParam(":name",		$name);
 			$sth->bindParam(":description",	$description);
@@ -58,6 +72,7 @@ class GroupsModel extends AbstractModel {
 			$sth->bindParam(":begin",		$begin);
 			$sth->bindParam(":end",			$end);
 			$sth->bindParam(":logo",		$logo);
+			$sth->bindParam(":in_overview",	$in_overview);
 			$sth->bindParam(":group_id",	$id);
 			if(!$sth->execute())
 			{
@@ -66,13 +81,15 @@ class GroupsModel extends AbstractModel {
 		}
 		
 		$this->SetLeaderToGroup($id, $leader);
+		
+		return true;
 	}
 	
-	private function CreateNewGroup($name, $description, $youngest, $oldest, $day, $begin, $end, $logo) {
+	private function CreateNewGroup($name, $description, $youngest, $oldest, $day, $begin, $end, $logo, $in_overview) {
 		$sth	= $this->db->prepare("INSERT INTO ".MYSQL_PREFIX."groups
-									(name, description, youngest, oldest, day, begin, end, logo)
+									(name, description, youngest, oldest, day, begin, end, logo, in_overview)
 									VALUES
-									(:name, :descrition, :youngest, :oldest, :day, :begin, :end, :logo)");
+									(:name, :description, :youngest, :oldest, :day, :begin, :end, :logo, :in_overview)");
 		$sth->bindParam(":name",		$name);
 		$sth->bindParam(":description",	$description);
 		$sth->bindParam(":youngest",	$youngest);
@@ -81,9 +98,10 @@ class GroupsModel extends AbstractModel {
 		$sth->bindParam(":begin",		$begin);
 		$sth->bindParam(":end",			$end);
 		$sth->bindParam(":logo",		$logo);
+		$sth->bindParam(":in_overview",	$in_overview);
 		
 		if($sth->execute()) {
-			return $sth->lastInsertId();
+			return $this->db->lastInsertId();
 		}
 		else {
 			return false;

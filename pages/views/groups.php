@@ -48,6 +48,121 @@ class GroupsView extends AbstractView {
 		return $this->tpl->load("content");
 	}
 	
+	public function AdminView() {
+		include_once(PATH_MODEL."groups.php");
+		$this->model	= new GroupsModel();
+		$layer			= impeesaLayer::getInstance();
+		
+		$layer->AddButton('<a href="'.LINK_ACP.'groups/edit" class="ym-add">Gruppe erstellen</a>');
+		
+		$groups	= "";
+		foreach($this->model->GetAllGroups(0) as $group) {
+			$this->tpl->vars("group_id",		$group['id']);
+			$this->tpl->vars("group_name",		$group['name']);
+			$this->tpl->vars("in_overview",		($group['in_overview'] == 1) ? "Kindergruppe" : "Sonstige Gruppe");
+			$this->tpl->vars("group_leader",	implode(", ", $this->model->GetLeader($group['id'])));
+			
+			$groups	.= $this->tpl->load("overview", PATH_PAGES_TPL."groups/");
+		}
+		$this->tpl->vars("headline",	"Gruppen verwalten");
+		$this->tpl->vars("content",		$groups);
+		return $this->tpl->load("content_table");
+	}
+	
+	public function EditView($data, $group_id=null) {
+		include_once(PATH_CORE_CLASS."impeesaForm.class.php");
+		include_once(PATH_CORE_CLASS."impeesaUser.class.php");
+		include_once(PATH_MODEL."groups.php");
+		$form 			= new impeesaForm();
+		$user			= new impeesaUser($_SESSION);
+		$this->model	= new GroupsModel(); 
+		
+		if(is_numeric($group_id) && !isset($data['submit'])) {
+			$data	= $this->model->GetGroup($group_id);
+		}
+		
+		if(empty($data)) {
+			//Fill data to vars
+			$data	= array(
+							"name"			=> "",
+							"in_overview"	=> True,
+							"youngest"		=> "",
+							"oldest"		=> "",
+							"begin"			=> "",
+							"end"			=> "",
+							"description"	=> "",
+						);
+		}
+		if(!isset($data['in_overview'])) {
+			$data['in_overview']	= False;
+		}
+		
+		$form_fields	= array(
+								array('fieldset', '', array(
+									array('text', 'Name', 'name', $data['name'], True),
+									array('checkbox', 'Reguläre Gruppe', 'in_overview', 'in_overview', False, $data['in_overview']),
+									),
+								),
+								array('fieldset', 'Allgemeine Infos', array(
+									array('fieldset', 'Alter der Grüpplinge', array(
+											array('text', 'Jüngste', 'youngest', $data['youngest'], True),
+											array('text', 'Älteste', 'oldest', $data['oldest'], True),
+											),
+										),
+									array('fieldset', 'Gruppenstunden', array(
+										array('select', 'Tag', 'day', array(
+												array('option', 'Bitte auswählen', '', True, True),
+												array('option', 'Montag', 'Montag'),
+												array('option', 'Dienstag', 'Dienstag'),
+												array('option', 'Mittwoch', 'Mittwoch'),
+												),
+											),
+											array('time', 'Begin', 'begin', date("H:i", strtotime($data['begin'])), True),
+											array('time', 'Ende', 'end', date("H:i", strtotime($data['end'])), True),
+											),
+										),
+									),
+								),
+								array('fieldset', 'Weiter Infos zur Gruppe', array(
+									array('textarea', '', 'description', $data['description']),
+									),
+								),
+								array('fieldset', 'Leiter', array(
+										//Fill with data below
+									),
+								),
+								array('fieldset', '', array(
+										array('submit', 'Speichern', 'submit'),
+									),
+								),
+							);
+		
+		//Fill leader
+		$all_leader	= (is_numeric($group_id)) ? $this->model->GetLeader($group_id) : array();
+		foreach($user->GetAllUserIds() as $leader) {
+			$userinfo				= $user->GetUserInfo($leader['id']);
+			$name					= $userinfo['first_name'].' '.$userinfo['name'];
+			$is_leader				= (in_array($name, $all_leader)) ? True : False;
+			
+			$form_fields[3][2][]	= array('checkbox', $userinfo['first_name'].' '.$userinfo['name'], 'leader[]', $leader['id'], False, $is_leader);
+		}
+		
+		if(!isset($data['submit']) || $form->Validation($form_fields, $data) == false) {
+			return $form->GetForm($form_fields, CURRENT_PAGE, "POST", "form ym-columnar");
+		}
+		
+		if(empty($data['leader'])) {
+			$form->SetErrorMsg("Es muss mindestens ein Leiter ausgewählt sein!");
+			return $form->GetForm($form_fields, CURRENT_PAGE, "POST", "form ym-columnar");
+		}
+		
+		//Save
+		if($this->model->SaveGroup($data['name'], $data['description'], $data['youngest'], $data['oldest'], $data['day'], $data['begin'], $data['end'], "woes.jpg", $data['leader'], $data['in_overview'], $group_id) == true) {
+			return impeesaLayer::SetInfoMsg($_SESSION, "Gruppe ".$data['name']." wurde erfolgreich gespeichert.", LINK_MAIN."groups/");
+		}
+		return impeesaLayer::SetInfoMsg($_SESSION, "Gruppe konnte nicht gespeichert werden!", CURRENT_PAGE, "error");
+	}
+	
 	public function SidebarView() {
 		$menu_array	= array(
 				array(
