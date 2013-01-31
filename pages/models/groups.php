@@ -7,7 +7,8 @@ class GroupsModel extends AbstractModel {
 	public function GetAllGroups($in_overview=1) {
 		$sth	= $this->db->prepare("SELECT id, name, description, day, youngest, oldest, begin, end, logo
 									FROM ".MYSQL_PREFIX."groups
-									WHERE in_overview = :in_overview");
+									WHERE in_overview = 1
+										OR in_overview = :in_overview");
 		$sth->bindParam(":in_overview",			$in_overview);
 		$sth->execute();
 		return $sth->fetchAll();
