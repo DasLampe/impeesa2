@@ -11,6 +11,7 @@ include_once(dirname(__FILE__)."/simpletest/autorun.php");
 include_once(dirname(__FILE__)."/cases/user.test.php");
 include_once(dirname(__FILE__)."/cases/pageAction.test.php");
 include_once(dirname(__FILE__)."/cases/picture.test.php");
+include_once(dirname(__FILE__)."/cases/groups.test.php");
 
 class AllTests extends TestSuite {
 	function _construct() {
@@ -18,6 +19,7 @@ class AllTests extends TestSuite {
 		$this->addTest(new TestUser());
 		$this->addTest(new TestPageAction());
 		$this->addTest(new TestPicture());
+		$this->addTest(new TestGroups());
 	}
 }
 

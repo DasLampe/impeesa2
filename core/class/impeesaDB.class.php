@@ -24,7 +24,7 @@ class impeesaDb {
 				self::$db	= new PDO("mysql:host=".MYSQL_HOST.";dbname=".MYSQL_DB, MYSQL_USER, MYSQL_PASS);
 				if($_SERVER['HTTP_HOST'] == "localhost")
 				{
-					self::$db->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING );
+					self::$db->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 				}
 				self::$db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, MYSQL_FETCH_MODE);
 				self::$db->exec("SET CHARACTER SET utf8");
