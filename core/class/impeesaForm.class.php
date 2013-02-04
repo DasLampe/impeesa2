@@ -28,6 +28,38 @@ class impeesaForm {
 		$this->error_msg[]	= $msg;
 	}
 	
+	public function fillData(array &$data, $node, array $new_data) {
+		if(!is_array($node)) {
+			$node	= array($node);
+		}
+		
+		foreach($data as &$array) {
+			if(is_array($array) && $array[0] == $node[0]) {
+				if(count($node) > 1)
+				{
+					if($this->fillData($array, array_shift($node), $new_data) == true)
+					{
+						return true;
+					}
+				}
+				else {
+					echo "Test";
+					//Find next array
+					for($x=1;$x<count($array);$x++) {
+						if(is_array($array[$x])) {
+							$array[$x][]	= $new_data;
+							return true;
+						}
+					}
+				}
+			}
+			elseif(is_array($array)) {
+				$this->fillData($array, $node, $new_data);
+			}
+		}
+		return false;
+	}
+	
 	public function Validation(array $fields, array $data)
 	{
 		foreach($fields as $field)

@@ -51,7 +51,7 @@ class ContactView extends AbstractView
 		foreach($this->model->GetAllContactUser() as $contact_user)
 		{
 			//Shows a little bit crazy ;)
-			$form_fields[1][2][0][3][]	= array("option", $contact_user[1], $contact_user[0]);
+			$form->fillData($form_fields, array("fieldset", "select"), array("option", $contact_user[1], $contact_user[0]));
 		}
 		
 		if(!isset($data['submit']) || $form->Validation($form_fields, $data) == false)
