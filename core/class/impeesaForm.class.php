@@ -37,7 +37,7 @@ class impeesaForm {
 			if(is_array($array) && $array[0] == $node[0]) {
 				if(count($node) > 1)
 				{
-					if($this->fillData($array, array_shift($node), $new_data) == true)
+					if($this->fillData($array, array_pop($node), $new_data) == true)
 					{
 						return true;
 					}
@@ -48,9 +48,9 @@ class impeesaForm {
 					for($x=1;$x<count($array);$x++) {
 						if(is_array($array[$x])) {
 							$array[$x][]	= $new_data;
-							return true;
 						}
 					}
+					return true;
 				}
 			}
 			elseif(is_array($array)) {

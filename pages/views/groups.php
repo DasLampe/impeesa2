@@ -145,13 +145,13 @@ class GroupsView extends AbstractView {
 		//Fill logo
 		foreach($this->model->ReadLogos() as $logo) {
 			$selected			= (isset($data['logo']) && $data['logo'] == $logo['filename']) ? True : False;
-			$form_fields[0][2][2][3][]	= array('option', $logo['name'], $logo['filename'], $selected);
+			$form->fillData($form_fields, array("fieldset", "select"), array('option', $logo['name'], $logo['filename'], 0, $selected));
 		}
 
 		//Fill day
 		foreach(array("Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag") as $day) {
 			$selected	= (isset($data['day']) && $day == $data['day']) ? True : False;
-			$form_fields[1][2][1][2][0][3][]	= array('option', $day, $day, $selected);
+			$form_fields[1][2][1][2][0][3][]	= array('option', $day, $day, 0, $selected);
 		}
 		
 		//Fill leader
