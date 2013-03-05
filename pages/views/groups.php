@@ -151,7 +151,7 @@ class GroupsView extends AbstractView {
 		//Fill day
 		foreach(array("Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag") as $day) {
 			$selected	= (isset($data['day']) && $day == $data['day']) ? True : False;
-			$form_fields[1][2][1][2][0][3][]	= array('option', $day, $day, 0, $selected);
+			$form->fillData($form_fields, array('fieldset', 'fieldset', 'select'), array('option', $day, $day, 0, $selected));
 		}
 		
 		//Fill leader
@@ -164,7 +164,7 @@ class GroupsView extends AbstractView {
 				$is_leader = True;
 			}
 			
-			$form_fields[3][2][]	= array('checkbox', $userinfo['first_name'].' '.$userinfo['name'], 'leader[]', $leader['id'], False, $is_leader);
+			$form->fillData($form_fields, array(array('fieldset', 'Leiter')), array('checkbox', $userinfo['first_name'].' '.$userinfo['name'], 'leader[]', $leader['id'], False, $is_leader));
 		}
 		
 		if(!isset($data['submit']) || $form->Validation($form_fields, $data) == false) {

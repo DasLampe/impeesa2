@@ -34,27 +34,33 @@ class impeesaForm {
 		}
 		
 		foreach($data as &$array) {
-			if(is_array($array) && $array[0] == $node[0]) {
+			if(is_array($array) && isset($array[0]) && (
+					(!is_array($node[0]) && $array[0] == $node[0]) ||
+					(is_array($node[0]) && $array[0] == $node[0][0] && $array[1] == $node[0][1])
+				)) {
 				if(count($node) > 1)
 				{
-					if($this->fillData($array, array_pop($node), $new_data) == true)
+					array_shift($node); //Remove first node
+					if($this->fillData($array, $node, $new_data) == true)
 					{
 						return true;
 					}
 				}
 				else {
-					echo "Test";
 					//Find next array
 					for($x=1;$x<count($array);$x++) {
 						if(is_array($array[$x])) {
 							$array[$x][]	= $new_data;
+							return true;
 						}
 					}
-					return true;
+					return false;
 				}
 			}
 			elseif(is_array($array)) {
-				$this->fillData($array, $node, $new_data);
+				if($this->fillData($array, $node, $new_data) == true) { //Exit if data insert
+					return true;
+				}
 			}
 		}
 		return false;
