@@ -19,4 +19,4 @@ CREATE TABLE IF NOT EXISTS `impeesa2_groups_leader` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
-UPDATE  `impeesa2_config` SET  `config_value` =  '2.0.4' WHERE  `config_key` =  'version';
+UPDATE  `impeesa2_config` SET  `config_value` =  '2.0.4a' WHERE  `config_key` =  'version';
