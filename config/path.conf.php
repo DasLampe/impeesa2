@@ -10,7 +10,13 @@ $subdir		= "/";
 if(strlen($_SERVER['DOCUMENT_ROOT']) < strlen($dir[0]))
 { //dir isn't document root.
 	$subdir 	= explode($_SERVER['DOCUMENT_ROOT'], $dir[0]);
-	$subdir		= $subdir[1];
+	
+	if(isset($subdir[1])) {
+		$subdir		= $subdir[1];
+		$subdir		= (substr($subdir, 0,1) != "/") ? "/".$subdir : $subdir;
+	} else {
+		$subdir		= "/";
+	}
 }
 
 define("PATH_MAIN",				$dir[0]);
