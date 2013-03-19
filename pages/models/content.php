@@ -42,6 +42,7 @@ class ContentModel extends AbstractModel
 	
 	private function EditPage($content, $sitename)
 	{
+		$content	= stripslashes($content);
 		try
 		{
 			$sth	= $this->db->prepare("UPDATE ".MYSQL_PREFIX."content SET
