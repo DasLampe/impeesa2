@@ -43,6 +43,9 @@ class ContentController extends AbstractController
 				case 'edit':
 					return $this->view->EditPageView($this->param[3], $_POST);
 					break;
+				case 'editHTML':
+					return $this->view->EditHTMLView($this->param[3], $_POST);
+					break;
 				case 'delete':
 					return $this->view->DeleteView($this->param[3]);
 					break;

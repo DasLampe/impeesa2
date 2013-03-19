@@ -162,6 +162,34 @@ class ContentView extends AbstractView {
 			return impeesaLayer::SetInfoMsg($_SESSION, "Seite wurde erfolgreich geändert.", LINK_MAIN.$this->model->SetValidPageName($data['name']), "success");
 		}
 		return impeesaLayer::SetInfoMsg($_SESSION, "Es ist ein Fehler aufgetreten. Seite wurde nicht gespeichert!", CURRENT_PAGE, "error");
+	}
+	
+	public function EditHTMLView($sitename, $data) {
+		include_once(PATH_MODEL."content.php");
+		$this->model	= new ContentModel();
+		
+		if(!isset($data['submit'])) {
+			include_once(PATH_CORE_CLASS."impeesaForm.class.php");
+			$form 			= new impeesaForm();
+		
+			$page			= $this->model->GetPageContent($sitename);
+		
+			$form_fields	= array(
+								array('fieldset', '', array(
+										array('static', 'Titel', 'title', $page['title']),
+										array('textarea', 'HMTL-Inhalt', 'content', $page['content'], 'True'),
+									),
+								),
+								array('fieldset', '', array(
+										array('submit', 'Speichern', 'submit'),
+									),
+								),
+							);
+			return $form->GetForm($form_fields, CURRENT_PAGE, "POST");
+		} elseif($this->model->SavePage($data['content'], $sitename) == true) {
+				return impeesaLayer::SetInfoMsg($_SESSION, "Seite erfolgreich gespeichert!", LINK_MAIN.$sitename);
+		}
+		return impeesaLayer::SetInfoMsg($_SESSION, "Seite konnte nicht gespeichert werden!", CURRENT_PAGE);
 		
 	}
 	
