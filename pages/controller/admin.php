@@ -45,6 +45,9 @@ class AdminController extends AbstractController {
 			case 'content':
 				$site	= 'content';
 				break;
+			case 'media':
+				$site	= "media";
+				break;
 			case 'groups':
 				$site	= 'groups';
 				break;

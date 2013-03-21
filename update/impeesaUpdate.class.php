@@ -33,14 +33,14 @@ class impeesaUpdate {
 	}
 	
 	public function CheckPermissions() {
-		$files_to_check	= array(PATH_UPLOAD."news/", PATH_UPLOAD."picture/" ,PATH_MAIN."tmp/");
+		$files_to_check	= array(PATH_UPLOAD."news/", PATH_UPLOAD."picture/" ,PATH_MAIN."tmp/", PATH_UPLOAD."media/");
 		foreach($files_to_check as $check) {
 			if(is_writable($check)) {
 				echo '<p class="box success">'.$check.' ist beschreibbar.</p>';
 			} elseif(chmod($check, 766)) {
 				echo '<p class="box success">'.$check.' war nicht beschreibbar. Impeesa2 konnte dieses Problem jedoch beheben.</p>';
 			} else {
-				echo '<p class="box error">'.$check.' ist nicht beschreibar & rechte können nicht gesetzt werden. Bitte entsprechende manuell Rechte setzen!</p>';
+				echo '<p class="box error">'.$check.' ist nicht beschreibar & rechte (766) können nicht gesetzt werden. Bitte entsprechende manuell Rechte setzen!</p>';
 			}
 		}
 	}
