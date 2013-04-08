@@ -14,23 +14,10 @@ class PictureModel extends AbstractModel
 	
 	public function UploadPicture(array $file, $dir)
 	{
-		$savePath	= $dir.'/'.$file['name'];
-		if(!file_exists($savePath))
-		{
-			if($this->resize_picture4save($file, $savePath, 640) === false)
-			{//if picture don't need to resize
-				if(move_uploaded_file($file['tmp_name'], $savePath))
-				{
-					return true;
-				}
-				else
-				{
-					return false;
-				}
-			}
-			return true;
-		}
-		return false;
+		include_once(PATH_CORE_CLASS."impeesaUpload.class.php");
+		$upload			= new impeesaUpload("image", array("size" => 640));
+		$this->encodeFilename($file);
+		$upload->uploadFile($dir, $file, $file['name']);
 	}
 
 	public function GetAlbumPicture($dir, $picture_start=0, $picture_end=-1)
@@ -80,35 +67,6 @@ class PictureModel extends AbstractModel
 			return true;
 		}
 		return false;
-	}
-
-	private function resize_picture4save($file, $savePath, $image_dimension)
-	{
-		$sizeInfo			= getimagesize($file['tmp_name']);
-		$image_aspectratio	= $sizeInfo[0] / $sizeInfo[1];
-		$scale_mode			= ($image_aspectratio > 1 ? -1 : -2);
-
-		if ($scale_mode == -1)
-		{
-			$newWidth = $image_dimension;
-			$newHeight = round($image_dimension / $image_aspectratio);
-		}
-		elseif ($scale_mode == -2)
-		{
-			$newWidth	= round($image_dimension * $image_aspectratio);
-			$newHeight	= $image_dimension;
-		}
-		else
-		{//nothing todo
-			return false;
-		}
-
-		//Resize
-		$oldPic			= ImageCreateFromJPEG($file['tmp_name']);
-		$newPic			= imagecreatetruecolor($newWidth,$newHeight);
-		imagecopyresampled($newPic,$oldPic,0,0,0,0,$newWidth,$newHeight,$sizeInfo[0],$sizeInfo[1]);
-		ImageJPEG($newPic, $savePath);
-		return true;
 	}
 
 	public function CountPicture($dir)
