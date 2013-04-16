@@ -33,6 +33,11 @@ class SidebarController extends AbstractController {
 			$view		= new GroupsView();
 			$return_content	.= $view->SidebarView();
 		}
+		if($this->param[0] == "tribes") {
+			include_once(PATH_VIEW."tribes.php");
+			$view		= new TribesView();
+			$return_content	.= $view->SidebarView();
+		}
 		
 		return $return_content;
 	}
