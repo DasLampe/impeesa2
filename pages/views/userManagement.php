@@ -14,12 +14,7 @@ class userManagementView extends AbstractView
 	{
 		include_once(PATH_CORE_CLASS."impeesaForm.class.php");
 		$form		= new impeesaForm();
-		
-		if(!isset($data['submit']) && $userinfo['can_contact'] == 1)
-		{
-			$data['can_contact'] = True;
-		}
-		
+
 		$username		= (isset($data['username'])) ? $data['username'] : "";
 		$first_name		= (isset($data['first_name'])) ? $data['first_name'] : "";
 		$name			= (isset($data['name'])) ? $data['name'] : "";
