@@ -37,7 +37,7 @@ class impeesaPage
 										(name, title, menu_title, in_nav, content)
 										VALUES
 										(:sitename, :title, :menu_title, :in_nav, 'Bitte Text einfügen!')");
-			$sth->bindParam(":sitename",	$this->SetValidPageName($sitename));
+			$sth->bindValue(":sitename",	$this->SetValidPageName($sitename));
 			$sth->bindParam(":title",		$title);
 			$sth->bindParam(":menu_title",	$menu_title);
 			$sth->bindParam(":in_nav",		$in_nav);
