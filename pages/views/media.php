@@ -14,7 +14,7 @@ class MediaView extends AbstractView {
 		
 		$return			= "";
 		foreach($this->model->getMedia() as $media) {
-			$this->tpl->vars("link",		LINK_UPLOAD."media/".$media['name']);
+			$this->tpl->vars("link",		LINK_MAIN."m/".$media['name']);
 			$this->tpl->vars("thumb_link",	$media['thumb']);
 		
 			$return		.= $this->tpl->load("_media_block", PATH_PAGES_TPL."media/");

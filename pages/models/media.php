@@ -14,7 +14,7 @@ class MediaModel extends AbstractModel {
 		
 		while(false !== ($file	= readdir($handle)))
 		{
-			if(!preg_match("/^\./", $file) && $file != "README")
+			if(!preg_match("/^\./", $file) && !is_dir(PATH_UPLOAD."media/".$file) && $file != "README")
 			{
 				$media[]	= array(
 									'file'	=> PATH_UPLOAD."media/".$file,
@@ -28,6 +28,11 @@ class MediaModel extends AbstractModel {
 	
 	private function getThumb($file) {
 		$filepath	= explode("/", $file);
-		return LINK_LIB."thumbnail/thumbnail.php?dir=media&picture=".$filepath[count($filepath)-1];
+		
+		if(preg_match("/.[jpg|jpeg]$/i", $file)) {
+			return LINK_LIB."thumbnail/thumbnail.php?dir=media&picture=".$filepath[count($filepath)-1];
+		} else {
+			return LINK_LIB."thumbnail/thumbnail.php?dir=media/static&picture=file.png";
+		}
 	}
 }
