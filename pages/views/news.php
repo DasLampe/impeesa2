@@ -125,7 +125,7 @@ class NewsView extends AbstractView
 	
 	public function UploadPictureView($file)
 	{
-		include_once(PATH_MODEL."impeesaUpload.class.php");
+		include_once(PATH_CORE_CLASS."impeesaUpload.class.php");
 		$upload		= new impeesaUpload();
 		
 		if(preg_match("/(.*)\.jpg$/", $file['name']) == false)
