@@ -45,7 +45,7 @@ class impeesaUpload {
 					break;
 			}
 		} else {
-			impeesaLog::error(PATH_UPLOAD.$dir.$filename." already exists");
+			throw new impeesaException($dir.$filename." already exists");
 			return false;
 		}
 	}

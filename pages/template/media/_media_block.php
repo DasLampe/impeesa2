@@ -7,6 +7,6 @@
 <div class="box">
 	<img src="{thumb_link}" class="img-dec" />
 	<p class="">
-		{link}
+		<input type="text" value="{link}" style="width: 400px;"/>
 	</p>
 </div>

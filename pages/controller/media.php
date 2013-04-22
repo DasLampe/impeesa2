@@ -14,7 +14,10 @@ class MediaController extends AbstractController {
 		$this->view	= new MediaView(); 
 		
 		if($user->CanEdit()) {
-			switch(@$this->param[1]) {
+			switch(@$this->param[2]) {
+				case 'upload':
+					return $this->view->UploadView($_FILES);
+					break;
 				default:
 				return $this->view->Overview();
 			}

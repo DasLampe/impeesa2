@@ -35,4 +35,10 @@ class MediaModel extends AbstractModel {
 			return LINK_LIB."thumbnail/thumbnail.php?dir=media/static&picture=file.png";
 		}
 	}
+	
+	public function uploadFile($file) {
+		include_once(PATH_CORE_CLASS."impeesaUpload.class.php");
+		$upload		= new impeesaUpload("mixed", array("size" => 640), true);
+		return $upload->uploadFile(PATH_UPLOAD."media/", $file['file']);
+	}
 }
