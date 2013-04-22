@@ -20,7 +20,7 @@ if(!file_exists(PATH_MAIN."config/db.conf.php"))
 {
 	echo '<p class="box error">Die Datei '.PATH_MAIN.'config/db.conf.php existiert nicht.<br/>Bitte erstelle diese!<br/><a href="<?= LINK_MAIN; ?>update/install.php">Ich habe Impeesa2 noch gar nicht installiert!</a>';
 } else {
-	$update	= new impeesaUpdate("2.0.4a", "update");
+	$update	= new impeesaUpdate("2.0.4", "update");
 	
 	if(!isset($_GET['step'])) {
 		$update->UpdateDatabase();

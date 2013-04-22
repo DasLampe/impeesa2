@@ -14,7 +14,7 @@ include_once(dirname(__FILE__)."/impeesaInstall.class.php");
 <h1>Impeesa2 - Installation</h1>
 
 <?php
-$install	= new impeesaInstall("2.0.4a", "install");
+$install	= new impeesaInstall("2.0.4", "install");
 if(!isset($_GET['step']))
 {
 	$install->DatabaseConnectionForm($_POST);
