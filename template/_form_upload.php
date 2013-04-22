@@ -1,10 +1,8 @@
 <?php
 // +----------------------------------------------------------------------+
-// | Copyright (c) 2012 DasLampe <daslampe@lano-crew.org> |
+// | Copyright (c) 2013 DasLampe <daslampe@lano-crew.org> |
 // | Encoding:  UTF-8 |
 // +----------------------------------------------------------------------+
 ?>
-<form class="ym-{form_class}" action="{action}" method="{method}" {upload}>
-	{error_msg}
-	{fields}
-</form>
+<label for="{name}">{label}</label>
+<input type="file" name="{name}" multiple {required} />
