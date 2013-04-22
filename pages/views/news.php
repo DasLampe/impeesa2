@@ -125,18 +125,16 @@ class NewsView extends AbstractView
 	
 	public function UploadPictureView($file)
 	{
-		include_once(PATH_MODEL."picture.php");
-		$this->model	= new PictureModel();
+		include_once(PATH_CORE_CLASS."impeesaUpload.class.php");
+		$upload		= new impeesaUpload();
 		
 		if(preg_match("/(.*)\.jpg$/", $file['name']) == false)
 		{
 			return impeesaLayer::SetInfoMsg($_SESSION, "Es wird nur *.jpg unterstützt!", "", "error");
 		}
 		
-		//Not run into name conflict
-		$this->model->encodeFilename($file);
 		
-		if($this->model->UploadPicture($file, PATH_UPLOAD."news/"))
+		if($upload->uploadFile("news/", $file) == true)
 		{
 			return impeesaLayer::SetInfoMsg($_SESSION, "Bild erfolgreich hochgeladen.", "", "success", array('picture_link' => LINK_LIB."thumbnail/thumbnail.php?dir=news&picture=".$file['name']));
 		}

@@ -13,13 +13,19 @@ class impeesaForm {
 		$this->error_msg	= array();
 	}
 	
-	public function GetForm(array $fields, $action, $method="post", $form_class="form")
+	public function GetForm(array $fields, $action, $method="post", $form_class="form", $upload=false)
 	{
 		$this->tpl->vars("form_class",	$form_class);
 		$this->tpl->vars("fields",		$this->GetFormFields($fields));
 		$this->tpl->vars("action",		$action);
 		$this->tpl->vars("method",		$method);
+		$this->tpl->vars("upload",		"");
 		$this->tpl->vars("error_msg",	$this->GetErrorMsg());
+		
+		if($upload == true) {
+			$this->tpl->vars("upload",	'enctype="multipart/form-data"');
+		}
+		
 		return $this->tpl->load("form");
 	}
 	
@@ -216,6 +222,9 @@ class impeesaForm {
 				break;
 			case 'submit':
 				return $this->tpl->load("_form_submit");
+				break;
+			case 'upload':
+				return $this->tpl->load("_form_upload");
 				break;
 		}
 	}
