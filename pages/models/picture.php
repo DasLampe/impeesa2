@@ -4,20 +4,12 @@
 // | Encoding:  UTF-8 |
 // +----------------------------------------------------------------------+
 class PictureModel extends AbstractModel
-{
-	public function encodeFilename(&$file)
-	{
-		$file_ext		= explode('.', $file['name']);
-		$file['name']	= md5($file['name'].time()).'.'.$file_ext[count($file_ext)-1];
-		return $file['name'];
-	}
-	
+{	
 	public function UploadPicture(array $file, $dir)
 	{
 		include_once(PATH_CORE_CLASS."impeesaUpload.class.php");
-		$upload			= new impeesaUpload("image", array("size" => 640));
-		$this->encodeFilename($file);
-		$upload->uploadFile($dir, $file, $file['name']);
+		$upload			= new impeesaUpload("image", array("size" => 640), true);
+		$upload->uploadFile($dir, $file);
 	}
 
 	public function GetAlbumPicture($dir, $picture_start=0, $picture_end=-1)

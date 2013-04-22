@@ -6,20 +6,28 @@
 class impeesaUpload {
 	private $type;
 	private $param;
+	private $encodeFilename;
 	
 	/**
-	* @param $type type of file. (image, pdf, document, music)
-	* @param $param optional parameter. image		=> array("size"),
+	* @param $type string type of file. (image, pdf, document, music)
+	* @param $param array optional parameter. image		=> array("size"),
 	*									pdf			=> array(),
 	*									document	=> array(),
 	*									music		=> array(),
+	* @param $encodeFilename boolean Default: false. Set true if file named by md5 string.
 	**/
-	public function __construct($type, array $param = array()) {
-		$this->type		= $type;
-		$this->param	= $param;
+	public function __construct($type, array $param = array(), $encodeFilename = false) {
+		$this->type				= $type;
+		$this->param			= $param;
+		$this->encodeFilename	= $encodeFilename;
 	}
 	
-	public function uploadFile($dir, $file, $filename="") {
+	public function uploadFile($dir, &$file, $filename="") {
+		if($this->encodeFilename == true) {
+			$this->encodeFilename($file);
+			$filename = ""; //clear $filename
+		}
+		
 		$filename	= (empty($filename)) ? $file['name'] : $filename;
 		
 		$dir	= rtrim($dir, "/");
@@ -92,5 +100,12 @@ class impeesaUpload {
 		imagecopyresampled($newPic,$oldPic,0,0,0,0,$newWidth,$newHeight,$sizeInfo[0],$sizeInfo[1]);
 		ImageJPEG($newPic, $savePath);
 		return true;
+	}
+	
+	private function encodeFilename(&$file)
+	{
+		$file_ext		= explode('.', $file['name']);
+		$file['name']	= uniqid().'.'.$file_ext[count($file_ext)-1];
+		return $file['name'];
 	}
 }
