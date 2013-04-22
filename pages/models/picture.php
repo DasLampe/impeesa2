@@ -9,7 +9,7 @@ class PictureModel extends AbstractModel
 	{
 		include_once(PATH_CORE_CLASS."impeesaUpload.class.php");
 		$upload			= new impeesaUpload("image", array("size" => 640), true);
-		$upload->uploadFile($dir, $file);
+		return $upload->uploadFile($dir, $file);
 	}
 
 	public function GetAlbumPicture($dir, $picture_start=0, $picture_end=-1)
