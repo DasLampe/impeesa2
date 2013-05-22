@@ -29,9 +29,7 @@ class TestPicture extends UnitTestCase {
 					'error'		=> 0,
 					'size'		=> filesize(dirname(__FILE__)."/share/".$this->filename),
 				);
-		$this->assertTrue($this->model->UploadPicture($array, PATH_UPLOAD."picture/".$this->album_name));
-		//Realy uploaded?
-		//$this->assertTrue(file_exists(PATH_UPLOAD."picture/".$this->album_name."/".$this->filename));
+		$this->assertTrue($this->model->UploadPicture($array, "picture/".$this->album_name));
 	}
 	
 	public function testGetAlbumPicture() {
@@ -40,11 +38,12 @@ class TestPicture extends UnitTestCase {
 		$this->assertFalse(empty($album));
 	}
 	
+	/* @TODO: Can't remove by filename. impeesaUpload use crypto filename
 	public function testRemovePicture() {
-		//$this->assertTrue($this->model->DeletePicture(PATH_UPLOAD."picture/".$this->album_name, $this->filename));
+		$this->assertTrue($this->model->DeletePicture(PATH_UPLOAD."picture/".$this->album_name, $this->filename));
 		
-		//$this->assertFalse(file_exists(PATH_UPLOAD."picture/".$this->album_name."/".$this->filename));
-	}
+		$this->assertFalse(file_exists(PATH_UPLOAD."picture/".$this->album_name."/".$this->filename));
+	}*/
 	
 	public function testRemoveAlbum() {
 		$this->assertTrue($this->model->RemoveAlbum($this->album_name));
